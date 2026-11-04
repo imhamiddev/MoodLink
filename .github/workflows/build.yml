@@ -15,4 +15,9 @@ jobs:
         with:
           # AGP 8.7 needs Gradle 8.9+; pin it instead of relying on the runner image.
           gradle-version: 8.10.2
-      - run: gradle :app:assembleDebug --no-daemon
+      - name: Build debug APK
+        env:
+          # Add these under Settings → Secrets and variables → Actions.
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: gradle :app:assembleDebug --no-daemon
