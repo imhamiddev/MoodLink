@@ -33,3 +33,27 @@ create table public.connections (
 
 create index connections_user_a_idx on public.connections (user_a);
 create index connections_user_b_idx on public.connections (user_b);
+
+-- ---------------------------------------------------------------------------
+-- Invite codes: 6 chars, no 0/O/1/I (mirrors InviteCode.kt)
+-- ---------------------------------------------------------------------------
+create or replace function public.generate_invite_code()
+returns text
+language plpgsql
+set search_path = ''
+as $$
+declare
+  alphabet constant text := 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  code text;
+  i int;
+begin
+  loop
+    code := '';
+    for i in 1..6 loop
+      code := code || substr(alphabet, 1 + floor(random() * length(alphabet))::int, 1);
+    end loop;
+    exit when not exists (select 1 from public.profiles where invite_code = code);
+  end loop;
+  return code;
+end;
+$$;
