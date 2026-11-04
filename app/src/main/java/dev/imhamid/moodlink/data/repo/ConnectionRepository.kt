@@ -9,13 +9,14 @@ import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.query.Columns
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import javax.inject.Inject
 import javax.inject.Singleton
 
 class ConnectError(message: String) : Exception(message)
 
-@Serializable private data class CodeParams(val code: String)
-@Serializable private data class IdRow(val id: String)
+@Serializable data class IdRow(val id: String)
 
 @Singleton
 class ConnectionRepository @Inject constructor(
@@ -27,7 +28,7 @@ class ConnectionRepository @Inject constructor(
         val code = InviteCode.normalize(rawCode)
         if (code.length != InviteCode.LENGTH) throw ConnectError("That code doesn't look right")
 
-        val target = client.postgrest.rpc("find_user_by_code", CodeParams(code))
+        val target = client.postgrest.rpc("find_user_by_code", buildJsonObject { put("code", code) })
             .decodeList<IdRow>().firstOrNull()?.id
             ?: throw ConnectError("No one has this code")
         if (target == me) throw ConnectError("That's your own code 🙂")
