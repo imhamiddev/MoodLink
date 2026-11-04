@@ -1,55 +1,47 @@
 package dev.imhamid.moodlink.data.repo
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import dev.imhamid.moodlink.data.model.UserProfile
-import kotlinx.coroutines.channels.awaitClose
+import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.providers.builtin.Email
+import io.github.jan.supabase.auth.status.SessionStatus
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AuthRepository @Inject constructor(
-    private val auth: FirebaseAuth,
-    private val db: FirebaseFirestore,
-) {
-    val currentUid: String? get() = auth.currentUser?.uid
+class AuthRepository @Inject constructor(private val client: SupabaseClient) {
 
-    val authState: Flow<String?> = callbackFlow {
-        val l = FirebaseAuth.AuthStateListener { trySend(it.currentUser?.uid) }
-        auth.addAuthStateListener(l)
-        awaitClose { auth.removeAuthStateListener(l) }
-    }
+    val currentUid: String? get() = client.auth.currentUserOrNull()?.id
+
+    /** Emits the signed-in user's id, or null when signed out. */
+    val authState: Flow<String?> = client.auth.sessionStatus
+        .filter { it !is SessionStatus.Initializing }
+        .map { (it as? SessionStatus.Authenticated)?.session?.user?.id }
+        .distinctUntilChanged()
 
     suspend fun signIn(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email.trim(), password).await()
-    }
-
-    suspend fun signUp(name: String, email: String, password: String) {
-        val uid = auth.createUserWithEmailAndPassword(email.trim(), password).await().user!!.uid
-        val profile = UserProfile(
-            uid = uid,
-            displayName = name.trim(),
-            email = email.trim(),
-            inviteCode = reserveInviteCode(uid),
-        )
-        db.collection("users").document(uid).set(profile).await()
-    }
-
-    /** Claims a unique code via a `inviteCodes/{code}` doc so lookups are O(1). */
-    private suspend fun reserveInviteCode(uid: String): String {
-        repeat(8) {
-            val code = InviteCode.generate()
-            val ref = db.collection("inviteCodes").document(code)
-            val claimed = db.runTransaction { tx ->
-                if (tx.get(ref).exists()) false else { tx.set(ref, mapOf("uid" to uid)); true }
-            }.await()
-            if (claimed) return code
+        client.auth.signInWith(Email) {
+            this.email = email.trim()
+            this.password = password
         }
-        error("Could not allocate an invite code")
     }
 
-    fun signOut() = auth.signOut()
+    /**
+     * The `profiles` row (including the invite code) is created by the
+     * `handle_new_user` database trigger, so the client only sends the name.
+     */
+    suspend fun signUp(name: String, email: String, password: String) {
+        client.auth.signUpWith(Email) {
+            this.email = email.trim()
+            this.password = password
+            data = buildJsonObject { put("display_name", name.trim()) }
+        }
+    }
+
+    suspend fun signOut() = client.auth.signOut()
 }
