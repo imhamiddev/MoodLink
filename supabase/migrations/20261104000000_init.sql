@@ -145,3 +145,16 @@ create policy "connections: recipient accepts"
 create policy "connections: either side removes"
   on public.connections for delete to authenticated
   using ((select auth.uid()) in (user_a, user_b));
+
+-- ---------------------------------------------------------------------------
+-- Least-privilege grants: signed-out clients get nothing, signed-in clients
+-- can only touch the columns the app actually writes.
+-- ---------------------------------------------------------------------------
+revoke all on public.profiles    from anon, authenticated;
+revoke all on public.connections from anon, authenticated;
+
+grant select on public.profiles to authenticated;
+grant update (display_name, mood_id, note, mood_updated_at) on public.profiles to authenticated;
+
+grant select, insert, delete on public.connections to authenticated;
+grant update (status) on public.connections to authenticated;
