@@ -2,7 +2,7 @@ package dev.imhamid.moodlink.data.model
 
 import androidx.compose.ui.graphics.Color
 
-/** Moods a user can share. [id] is what gets stored in Firestore. */
+/** Moods a user can share. [id] is what gets stored in the `mood_id` column. */
 enum class Mood(val id: String, val emoji: String, val label: String, val tint: Color, val tintDark: Color) {
     HAPPY("happy", "😄", "Happy", Color(0xFFFFE08A), Color(0xFFFFB800)),
     LOVE("love", "🥰", "In love", Color(0xFFFFC2D9), Color(0xFFFF5C93)),
