@@ -7,11 +7,20 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.imhamid.moodlink.data.model.Mood
+import dev.imhamid.moodlink.ui.components.GhostButton
 import dev.imhamid.moodlink.ui.components.GradientButton
 import dev.imhamid.moodlink.ui.components.MoodField
 import dev.imhamid.moodlink.ui.components.MoodTile
+import dev.imhamid.moodlink.ui.theme.Ink
+import dev.imhamid.moodlink.ui.theme.InkSoft
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -22,19 +31,34 @@ fun MoodPickerSheet(
 ) {
     var selected by remember { mutableStateOf(current) }
     var note by remember { mutableStateOf("") }
-    ModalBottomSheet(onDismissRequest = onDismiss, containerColor = MaterialTheme.colorScheme.background) {
-        Column(Modifier.padding(horizontal = 20.dp).padding(bottom = 24.dp).navigationBarsPadding().imePadding(),
-            verticalArrangement = Arrangement.spacedBy(14.dp)) {
-            Text("How are you feeling today?", style = MaterialTheme.typography.headlineMedium)
+    var writing by remember { mutableStateOf(false) }
+
+    ModalBottomSheet(onDismissRequest = onDismiss, containerColor = Color(0xFFF6EEFF)) {
+        Column(
+            Modifier.padding(horizontal = 20.dp).padding(bottom = 16.dp).navigationBarsPadding().imePadding(),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
+        ) {
+            Text(
+                buildAnnotatedString {
+                    withStyle(SpanStyle(fontWeight = FontWeight.Light, color = InkSoft)) { append("How do you describe\n") }
+                    withStyle(SpanStyle(fontWeight = FontWeight.ExtraBold, color = Ink)) { append("your feeling ") }
+                    withStyle(SpanStyle(fontWeight = FontWeight.Light, color = InkSoft)) { append("today?") }
+                },
+                fontSize = 28.sp, lineHeight = 34.sp,
+            )
             LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.heightIn(max = 380.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.heightIn(max = 340.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) { items(Mood.entries) { m -> MoodTile(m, selected == m, { selected = m }) } }
-            MoodField(note, { note = it.take(60) }, "Add a short note (optional)")
-            GradientButton("Share with my people", enabled = selected != null,
-                onClick = { selected?.let { onShare(it, note) } })
+
+            if (writing) MoodField(note, { note = it.take(60) }, "Add a short note (optional)")
+            GradientButton(
+                "Share with my people", enabled = selected != null,
+                onClick = { selected?.let { onShare(it, note) } },
+            )
+            GhostButton(if (writing) "Hide note" else "Write your thoughts", onClick = { writing = !writing })
         }
     }
 }
