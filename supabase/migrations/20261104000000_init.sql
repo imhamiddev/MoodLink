@@ -30,3 +30,6 @@ create table public.connections (
   constraint connections_id_match check (id = user_a::text || '_' || user_b::text),
   constraint connections_requester_is_member check (requester_id in (user_a, user_b))
 );
+
+create index connections_user_a_idx on public.connections (user_a);
+create index connections_user_b_idx on public.connections (user_b);
