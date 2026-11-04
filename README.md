@@ -39,5 +39,9 @@ Every push and PR runs `assembleDebug` and uploads `moodlink-debug-apk` as an ar
 
 The anon key is designed to ship inside the app; access is enforced by the row level security policies in the migration. Never put the `service_role` key in the app or in secrets used for the build.
 
+## Releases
+Push a tag (`git tag v0.1.0 && git push origin v0.1.0`) or run **Actions → Release → Run workflow**.
+The workflow builds the APK and attaches it to a GitHub Release. The APK is signed with the debug key, which is fine for sideloading.
+
 ## Design
 Lavender/pink gradient, frosted-glass cards, rounded shapes and a purple→blue CTA, based on the reference mood-tracker UIs.
