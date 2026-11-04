@@ -21,7 +21,6 @@ fun supabaseConfig(name: String, fallback: String): String =
         ?: localProps.getProperty(name)?.takeIf { it.isNotBlank() }
         ?: fallback
 
-// Firebase / google-services removed: the backend is now Supabase.
 
 android {
     namespace = "dev.imhamid.moodlink"
