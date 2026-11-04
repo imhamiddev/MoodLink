@@ -99,3 +99,27 @@ $$;
 
 revoke all on function public.find_user_by_code(text) from public, anon;
 grant execute on function public.find_user_by_code(text) to authenticated;
+
+-- ---------------------------------------------------------------------------
+-- Row level security
+-- ---------------------------------------------------------------------------
+alter table public.profiles    enable row level security;
+alter table public.connections enable row level security;
+
+-- You can see your own profile and the profile of anyone you share a
+-- connection (pending or accepted) with. Emails are not world-readable.
+create policy "profiles: read own or connected"
+  on public.profiles for select to authenticated
+  using (
+    id = (select auth.uid())
+    or exists (
+      select 1 from public.connections c
+      where (c.user_a = (select auth.uid()) and c.user_b = profiles.id)
+         or (c.user_b = (select auth.uid()) and c.user_a = profiles.id)
+    )
+  );
+
+create policy "profiles: update own"
+  on public.profiles for update to authenticated
+  using (id = (select auth.uid()))
+  with check (id = (select auth.uid()));
