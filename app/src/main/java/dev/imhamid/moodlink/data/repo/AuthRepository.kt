@@ -41,6 +41,8 @@ class AuthRepository @Inject constructor(private val client: SupabaseClient) {
             this.password = password
             data = buildJsonObject { put("display_name", name.trim()) }
         }
+        // With "Confirm email" off Supabase already returns a session; this is only a safety net.
+        if (currentUid == null) signIn(email, password)
     }
 
     suspend fun signOut() = client.auth.signOut()
