@@ -9,11 +9,19 @@ plugins {
     alias(libs.plugins.hilt)
 }
 
-// Apply google-services only when the config file exists, so the project
-// still syncs for contributors who haven't set up Firebase yet.
-if (file("google-services.json").exists()) {
-    apply(plugin = "com.google.gms.google-services")
+// Supabase credentials come from the environment (CI secrets) or local.properties.
+// Falling back to placeholders keeps the project buildable without any setup.
+val localProps = Properties().apply {
+    val f = rootProject.file("local.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
 }
+
+fun supabaseConfig(name: String, fallback: String): String =
+    System.getenv(name)?.takeIf { it.isNotBlank() }
+        ?: localProps.getProperty(name)?.takeIf { it.isNotBlank() }
+        ?: fallback
+
+// Firebase / google-services removed: the backend is now Supabase.
 
 android {
     namespace = "dev.imhamid.moodlink"
@@ -25,6 +33,9 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "0.1.0"
+
+        buildConfigField("String", "SUPABASE_URL", "\"${supabaseConfig("SUPABASE_URL", "https://placeholder.supabase.co")}\"")
+        buildConfigField("String", "SUPABASE_ANON_KEY", "\"${supabaseConfig("SUPABASE_ANON_KEY", "placeholder-anon-key")}\"")
     }
 
     buildTypes {
@@ -39,7 +50,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions { jvmTarget = "17" }
-    buildFeatures { compose = true }
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
 }
 
 dependencies {
