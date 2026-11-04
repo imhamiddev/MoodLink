@@ -10,4 +10,6 @@
 .cxx/
 *.jks
 *.keystore
-google-services.json
+.env
+supabase/.temp/
+supabase/.branches/
