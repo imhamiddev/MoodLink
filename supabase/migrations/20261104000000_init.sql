@@ -83,3 +83,19 @@ $$;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
+
+-- ---------------------------------------------------------------------------
+-- Look up a user by invite code without exposing the whole profiles table.
+-- ---------------------------------------------------------------------------
+create or replace function public.find_user_by_code(code text)
+returns table (id uuid)
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select p.id from public.profiles p where p.invite_code = upper(trim(code)) limit 1;
+$$;
+
+revoke all on function public.find_user_by_code(text) from public, anon;
+grant execute on function public.find_user_by_code(text) to authenticated;
