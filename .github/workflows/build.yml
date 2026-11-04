@@ -24,7 +24,11 @@ jobs:
           # Add these under Settings → Secrets and variables → Actions.
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-        run: gradle :app:assembleDebug --no-daemon
+        run: gradle :app:assembleDebug --no-daemon --stacktrace 2>&1 | tee build.log; exit ${PIPESTATUS[0]}
+      - name: Surface build errors as annotations
+        if: failure()
+        run: |
+          grep -E "^e: |error:|What went wrong|Could not|FAILED|Unresolved" build.log | head -8 | cut -c1-400 | while IFS= read -r l; do echo "::error::$l"; done
       - uses: actions/upload-artifact@v4
         with:
           name: moodlink-debug-apk
