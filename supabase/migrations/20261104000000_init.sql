@@ -158,3 +158,8 @@ grant update (display_name, mood_id, note, mood_updated_at) on public.profiles t
 
 grant select, insert, delete on public.connections to authenticated;
 grant update (status) on public.connections to authenticated;
+
+-- ---------------------------------------------------------------------------
+-- Realtime: the app listens for mood + connection changes
+-- ---------------------------------------------------------------------------
+alter publication supabase_realtime add table public.profiles, public.connections;
