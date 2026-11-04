@@ -18,6 +18,7 @@ import androidx.glance.layout.*
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
+import androidx.glance.unit.ColorProvider
 import dev.imhamid.moodlink.MainActivity
 import dev.imhamid.moodlink.data.model.Friend
 import kotlinx.coroutines.flow.first
