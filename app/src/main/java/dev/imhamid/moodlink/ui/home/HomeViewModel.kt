@@ -41,5 +41,5 @@ class HomeViewModel @Inject constructor(
     fun shareMood(mood: Mood, note: String) = viewModelScope.launch { moods.setMood(uid, mood, note) }
     fun accept(id: String) = viewModelScope.launch { connections.accept(id) }
     fun decline(id: String) = viewModelScope.launch { connections.remove(id) }
-    fun signOut() = auth.signOut()
+    fun signOut() = viewModelScope.launch { auth.signOut() }
 }
