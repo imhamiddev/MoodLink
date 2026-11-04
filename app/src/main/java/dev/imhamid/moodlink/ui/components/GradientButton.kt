@@ -1,6 +1,7 @@
 package dev.imhamid.moodlink.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -12,9 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.imhamid.moodlink.ui.theme.CtaGradient
+import dev.imhamid.moodlink.ui.theme.Ink
+import dev.imhamid.moodlink.ui.theme.Purple500
 
 @Composable
 fun GradientButton(
@@ -27,14 +32,30 @@ fun GradientButton(
     Box(
         modifier
             .fillMaxWidth()
-            .height(56.dp)
+            .height(58.dp)
             .alpha(if (enabled) 1f else .5f)
+            .shadow(10.dp, CircleShape, ambientColor = Purple500, spotColor = Purple500)
             .clip(CircleShape)
             .background(CtaGradient)
             .clickable(enabled = enabled && !loading, onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         if (loading) CircularProgressIndicator(Modifier.size(24.dp), color = Color.White, strokeWidth = 2.5.dp)
-        else Text(text, color = Color.White, style = MaterialTheme.typography.labelLarge)
+        else Text(text, color = Color.White, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.SemiBold)
     }
+}
+
+/** White pill button, e.g. "Write your thoughts". */
+@Composable
+fun GhostButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Box(
+        modifier
+            .fillMaxWidth()
+            .height(54.dp)
+            .clip(CircleShape)
+            .background(Color.White.copy(alpha = .9f))
+            .border(1.dp, Color.White, CircleShape)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) { Text(text, color = Ink, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Medium) }
 }
