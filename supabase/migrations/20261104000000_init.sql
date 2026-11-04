@@ -123,3 +123,25 @@ create policy "profiles: update own"
   on public.profiles for update to authenticated
   using (id = (select auth.uid()))
   with check (id = (select auth.uid()));
+
+create policy "connections: read mine"
+  on public.connections for select to authenticated
+  using ((select auth.uid()) in (user_a, user_b));
+
+create policy "connections: request as myself"
+  on public.connections for insert to authenticated
+  with check (
+    (select auth.uid()) in (user_a, user_b)
+    and requester_id = (select auth.uid())
+    and status = 'PENDING'
+  );
+
+-- Only the person who was asked may accept.
+create policy "connections: recipient accepts"
+  on public.connections for update to authenticated
+  using ((select auth.uid()) in (user_a, user_b) and requester_id <> (select auth.uid()))
+  with check (status = 'ACCEPTED');
+
+create policy "connections: either side removes"
+  on public.connections for delete to authenticated
+  using ((select auth.uid()) in (user_a, user_b));
