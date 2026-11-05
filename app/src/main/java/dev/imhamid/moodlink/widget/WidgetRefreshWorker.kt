@@ -1,13 +1,12 @@
 package dev.imhamid.moodlink.widget
 
 import android.content.Context
-import androidx.glance.appwidget.updateAll
 import androidx.work.*
 import java.util.concurrent.TimeUnit
 
 class WidgetRefreshWorker(ctx: Context, params: WorkerParameters) : CoroutineWorker(ctx, params) {
     override suspend fun doWork(): Result {
-        MoodWidget().updateAll(applicationContext)
+        MoodWidgets.updateAll(applicationContext)
         return Result.success()
     }
 
