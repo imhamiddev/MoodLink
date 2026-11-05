@@ -1,27 +1,33 @@
 package dev.imhamid.moodlink.ui.mood
 
-import dev.imhamid.moodlink.R
-import androidx.compose.ui.res.stringResource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import dev.imhamid.moodlink.R
 import dev.imhamid.moodlink.data.model.Mood
-import dev.imhamid.moodlink.ui.components.GradientButton
 import dev.imhamid.moodlink.ui.components.MoodTile
-import dev.imhamid.moodlink.ui.components.entrance
+import dev.imhamid.moodlink.ui.components.PrimaryButton
+import dev.imhamid.moodlink.ui.theme.Accent
 import dev.imhamid.moodlink.ui.theme.Ink
-import dev.imhamid.moodlink.ui.theme.InkSoft
+import dev.imhamid.moodlink.ui.theme.Paper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,30 +38,24 @@ fun MoodPickerSheet(
 ) {
     var selected by remember { mutableStateOf(current) }
 
-    ModalBottomSheet(onDismissRequest = onDismiss, containerColor = Color(0xFFF6EEFF)) {
+    ModalBottomSheet(onDismissRequest = onDismiss, containerColor = Paper) {
         Column(
             Modifier.padding(horizontal = 20.dp).padding(bottom = 16.dp).navigationBarsPadding().imePadding(),
-            verticalArrangement = Arrangement.spacedBy(14.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Text(
-                stringResource(R.string.picker_title),
-                fontSize = 28.sp, lineHeight = 34.sp, fontWeight = FontWeight.ExtraBold, color = Ink,
-                modifier = Modifier.entrance(0),
-            )
+            Text(stringResource(R.string.picker_title), style = MaterialTheme.typography.headlineMedium, color = Ink)
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                modifier = Modifier.heightIn(max = 340.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.heightIn(max = 420.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                itemsIndexed(Mood.entries) { i, m ->
-                    MoodTile(m, selected == m, { selected = m }, Modifier.entrance(i + 1))
-                }
+                items(Mood.entries) { m -> MoodTile(m, selected == m, { selected = m }) }
             }
-
-            GradientButton(
+            PrimaryButton(
                 stringResource(R.string.picker_share), enabled = selected != null,
                 onClick = { selected?.let(onShare) },
+                container = Accent, content = androidx.compose.ui.graphics.Color.White,
             )
         }
     }

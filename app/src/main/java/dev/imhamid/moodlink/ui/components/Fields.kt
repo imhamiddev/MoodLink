@@ -1,21 +1,21 @@
 package dev.imhamid.moodlink.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
+import dev.imhamid.moodlink.ui.theme.Accent
+import dev.imhamid.moodlink.ui.theme.ControlShape
+import dev.imhamid.moodlink.ui.theme.Ink
 import dev.imhamid.moodlink.ui.theme.InkSoft
-import dev.imhamid.moodlink.ui.theme.Purple400
-import dev.imhamid.moodlink.ui.theme.Purple600
+import dev.imhamid.moodlink.ui.theme.Line
+import dev.imhamid.moodlink.ui.theme.Raised
 
 @Composable
 fun MoodField(
@@ -33,16 +33,19 @@ fun MoodField(
         label = { Text(label) },
         singleLine = singleLine,
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(28.dp),
+        shape = ControlShape,
         keyboardOptions = KeyboardOptions(keyboardType = if (password) KeyboardType.Password else keyboardType),
         visualTransformation = if (password) PasswordVisualTransformation() else VisualTransformation.None,
         colors = OutlinedTextFieldDefaults.colors(
-            focusedContainerColor = Color.White.copy(alpha = .9f),
-            unfocusedContainerColor = Color.White.copy(alpha = .72f),
-            focusedBorderColor = Purple400,
-            unfocusedBorderColor = Color.White,
-            focusedLabelColor = Purple600,
+            focusedContainerColor = Raised,
+            unfocusedContainerColor = Raised,
+            focusedBorderColor = Accent,
+            unfocusedBorderColor = Line,
+            focusedLabelColor = Accent,
             unfocusedLabelColor = InkSoft,
+            focusedTextColor = Ink,
+            unfocusedTextColor = Ink,
+            cursorColor = Accent,
         ),
     )
 }

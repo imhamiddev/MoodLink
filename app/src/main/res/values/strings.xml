@@ -106,4 +106,10 @@
     <string name="error_bad_credentials">Wrong email or password.</string>
     <string name="error_email_taken">This email already has an account. Try logging in.</string>
     <string name="error_network">No connection. Check your internet and try again.</string>
+
+    <!-- Relative time -->
+    <string name="time_now">just now</string>
+    <string name="time_minutes">%1$d min ago</string>
+    <string name="time_hours">%1$d h ago</string>
+    <string name="time_days">%1$d d ago</string>
 </resources>
