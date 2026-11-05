@@ -93,4 +93,14 @@
     <string name="widget_set_mood">حالت را ثبت کن</string>
     <string name="widget_feeling">حال من</string>
     <string name="widget_no_mood">هنوز حالی ثبت نشده</string>
+
+    <!-- Widget picker -->
+    <string name="widget_description">ببین نزدیکانت همین حالا چه حالی دارند</string>
+    <string name="widget_label_friends">مودلینک · دوستان (۴×۲)</string>
+    <string name="widget_label_spotlight">مودلینک · کانون توجه (۲×۲)</string>
+    <string name="widget_label_list">مودلینک · فهرست دوستان (۴×۴)</string>
+    <string name="widget_label_mine">مودلینک · حال من (۲×۱)</string>
+    <string name="widget_description_spotlight">دوستی که تازه‌تر از همه حالش را عوض کرده</string>
+    <string name="widget_description_list">همه‌ی کسانی که به آن‌ها وصل هستی، یک‌جا</string>
+    <string name="widget_description_mine">حال فعلی خودت</string>
 </resources>
