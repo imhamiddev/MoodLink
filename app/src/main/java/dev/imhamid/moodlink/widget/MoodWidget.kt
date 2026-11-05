@@ -1,5 +1,7 @@
 package dev.imhamid.moodlink.widget
 
+import dev.imhamid.moodlink.R
+import dev.imhamid.moodlink.i18n.AppLanguage
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -45,28 +47,29 @@ open class MoodWidget : GlanceAppWidget() {
         val uid = ep.auth().currentUid
         // One-shot read; the periodic worker + in-app updates keep it fresh.
         val friends = uid?.let { withTimeoutOrNull(8_000) { ep.moods().observeFriends(it).first() } }.orEmpty()
-        provideContent { Content(signedIn = uid != null, friends = friends) }
+        val strings = AppLanguage.wrap(context)
+        provideContent { Content(strings, signedIn = uid != null, friends = friends) }
     }
 
     @Composable
-    private fun Content(signedIn: Boolean, friends: List<Friend>) {
+    private fun Content(ctx: Context, signedIn: Boolean, friends: List<Friend>) {
         val size = LocalSize.current
         Box(
             GlanceModifier.fillMaxSize().cornerRadius(28.dp).background(WSurface)
                 .clickable(actionStartActivity<MainActivity>()).padding(10.dp),
         ) {
             when {
-                !signedIn -> Empty("Open MoodLink to log in 💜")
-                friends.isEmpty() -> Empty("Connect with someone to see their mood 💌")
-                size.height >= 200.dp -> ListLayout(friends)
-                size.width >= 180.dp -> RowLayout(friends, size.width.value)
-                else -> Spotlight(friends.first())
+                !signedIn -> Empty(ctx.getString(R.string.widget_open_login))
+                friends.isEmpty() -> Empty(ctx.getString(R.string.widget_connect_hint))
+                size.height >= 200.dp -> ListLayout(ctx, friends)
+                size.width >= 180.dp -> RowLayout(ctx, friends, size.width.value)
+                else -> Spotlight(ctx, friends.first())
             }
         }
     }
 
     @Composable
-    private fun Spotlight(f: Friend) {
+    private fun Spotlight(ctx: Context, f: Friend) {
         val mood = f.profile.mood
         Column(
             GlanceModifier.fillMaxSize().cornerRadius(22.dp).background(mood?.tint ?: WNeutral),
@@ -81,7 +84,7 @@ open class MoodWidget : GlanceAppWidget() {
                 maxLines = 1,
             )
             Text(
-                mood?.label ?: "no mood yet",
+                ctx.getString(mood?.labelRes ?: R.string.widget_no_mood),
                 style = TextStyle(color = ColorProvider(WInkSoft), fontSize = 12.sp, textAlign = TextAlign.Center),
                 maxLines = 1,
             )
@@ -89,7 +92,7 @@ open class MoodWidget : GlanceAppWidget() {
     }
 
     @Composable
-    private fun RowLayout(friends: List<Friend>, widthDp: Float) {
+    private fun RowLayout(ctx: Context, friends: List<Friend>, widthDp: Float) {
         val count = (widthDp / 96f).toInt().coerceIn(2, 4)
         Row(GlanceModifier.fillMaxSize()) {
             friends.take(count).forEachIndexed { i, f ->
@@ -108,7 +111,7 @@ open class MoodWidget : GlanceAppWidget() {
                         maxLines = 1,
                     )
                     Text(
-                        mood?.label ?: "—",
+                        ctx.getString(mood?.labelRes ?: R.string.widget_no_mood),
                         style = TextStyle(color = ColorProvider(WInkSoft), fontSize = 11.sp, textAlign = TextAlign.Center),
                         maxLines = 1,
                     )
@@ -118,24 +121,24 @@ open class MoodWidget : GlanceAppWidget() {
     }
 
     @Composable
-    private fun ListLayout(friends: List<Friend>) {
+    private fun ListLayout(ctx: Context, friends: List<Friend>) {
         Column(GlanceModifier.fillMaxSize()) {
             Row(GlanceModifier.fillMaxWidth().padding(bottom = 6.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    "Your people",
+                    ctx.getString(R.string.home_people),
                     style = TextStyle(color = ColorProvider(WInk), fontWeight = FontWeight.Bold, fontSize = 16.sp),
                     modifier = GlanceModifier.defaultWeight(),
                 )
                 Text("${friends.size}", style = TextStyle(color = ColorProvider(WInkSoft), fontSize = 13.sp))
             }
             LazyColumn {
-                items(friends.take(8)) { f -> FriendRow(f) }
+                items(friends.take(8)) { f -> FriendRow(ctx, f) }
             }
         }
     }
 
     @Composable
-    private fun FriendRow(f: Friend) {
+    private fun FriendRow(ctx: Context, f: Friend) {
         val mood = f.profile.mood
         Row(
             GlanceModifier.fillMaxWidth().padding(vertical = 4.dp),
@@ -153,7 +156,7 @@ open class MoodWidget : GlanceAppWidget() {
                     maxLines = 1,
                 )
                 Text(
-                    mood?.let { "is ${it.label.lowercase()} now" } ?: "no mood yet",
+                    ctx.getString(mood?.labelRes ?: R.string.widget_no_mood),
                     style = TextStyle(color = ColorProvider(WInkSoft), fontSize = 12.sp),
                     maxLines = 1,
                 )
