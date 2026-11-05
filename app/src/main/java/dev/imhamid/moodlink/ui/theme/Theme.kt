@@ -10,7 +10,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
@@ -44,10 +43,6 @@ private val MoodShapes = Shapes(
     large = PanelShape,
     extraLarge = PanelShape,
 )
-
-// Kept only for screens that still use the old look; deleted once they are migrated.
-val ScreenGradient = Brush.verticalGradient(listOf(Paper, Paper))
-val CtaGradient = Brush.horizontalGradient(listOf(Accent, Accent))
 
 @Composable
 fun MoodLinkTheme(content: @Composable () -> Unit) {
