@@ -81,4 +81,16 @@
     <string name="logout_body">You can log back in anytime. Your friends keep seeing your last mood.</string>
     <string name="logout_stay">Stay</string>
     <string name="profile_version">MoodLink v%1$s</string>
+
+    <!-- Moods -->
+    <string name="mood_happy">Happy</string>
+    <string name="mood_love">In love</string>
+    <string name="mood_calm">Calm</string>
+    <string name="mood_sleepy">Sleepy</string>
+    <string name="mood_tired">Tired</string>
+    <string name="mood_sad">Sad</string>
+    <string name="mood_miss_you">Miss you</string>
+    <string name="mood_angry">Angry</string>
+    <string name="mood_anxious">Anxious</string>
+    <string name="mood_excited">Excited</string>
 </resources>

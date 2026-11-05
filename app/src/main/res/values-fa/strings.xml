@@ -73,4 +73,16 @@
     <string name="logout_body">هر وقت خواستی دوباره وارد شو. دوستانت آخرین حالتی که ثبت کرده‌ای را می‌بینند.</string>
     <string name="logout_stay">ماندن</string>
     <string name="profile_version">مودلینک نسخه‌ی %1$s</string>
+
+    <!-- Moods -->
+    <string name="mood_happy">شاد</string>
+    <string name="mood_love">عاشق</string>
+    <string name="mood_calm">آرام</string>
+    <string name="mood_sleepy">خواب‌آلود</string>
+    <string name="mood_tired">خسته</string>
+    <string name="mood_sad">غمگین</string>
+    <string name="mood_miss_you">دلتنگ</string>
+    <string name="mood_angry">عصبانی</string>
+    <string name="mood_anxious">مضطرب</string>
+    <string name="mood_excited">هیجان‌زده</string>
 </resources>
