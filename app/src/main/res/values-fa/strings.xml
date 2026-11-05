@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">مودلینک</string>
+
+    <!-- Common -->
+    <string name="back">بازگشت</string>
+    <string name="language">زبان</string>
+    <string name="language_en">English</string>
+    <string name="language_fa">فارسی</string>
+</resources>

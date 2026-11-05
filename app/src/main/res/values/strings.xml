@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">MoodLink</string>
+    
     <string name="widget_description">See how your people feel right now</string>
     <string name="widget_label_friends">MoodLink · Friends (4×2)</string>
     <string name="widget_label_spotlight">MoodLink · Spotlight (2×2)</string>
@@ -8,4 +9,10 @@
     <string name="widget_description_spotlight">The friend whose mood changed most recently</string>
     <string name="widget_description_list">Everyone you are connected with, at a glance</string>
     <string name="widget_description_mine">Your own current mood</string>
+
+    <!-- Common -->
+    <string name="back">Back</string>
+    <string name="language">Language</string>
+    <string name="language_en">English</string>
+    <string name="language_fa">فارسی</string>
 </resources>
