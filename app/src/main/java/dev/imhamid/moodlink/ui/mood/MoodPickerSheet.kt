@@ -1,9 +1,14 @@
 package dev.imhamid.moodlink.ui.mood
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -19,6 +24,7 @@ import dev.imhamid.moodlink.ui.components.GhostButton
 import dev.imhamid.moodlink.ui.components.GradientButton
 import dev.imhamid.moodlink.ui.components.MoodField
 import dev.imhamid.moodlink.ui.components.MoodTile
+import dev.imhamid.moodlink.ui.components.entrance
 import dev.imhamid.moodlink.ui.theme.Ink
 import dev.imhamid.moodlink.ui.theme.InkSoft
 
@@ -44,16 +50,25 @@ fun MoodPickerSheet(
                     withStyle(SpanStyle(fontWeight = FontWeight.ExtraBold, color = Ink)) { append("your feeling ") }
                     withStyle(SpanStyle(fontWeight = FontWeight.Light, color = InkSoft)) { append("today?") }
                 },
-                fontSize = 28.sp, lineHeight = 34.sp,
+                fontSize = 28.sp, lineHeight = 34.sp, modifier = Modifier.entrance(0),
             )
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier.heightIn(max = 340.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
-            ) { items(Mood.entries) { m -> MoodTile(m, selected == m, { selected = m }) } }
+            ) {
+                itemsIndexed(Mood.entries) { i, m ->
+                    MoodTile(m, selected == m, { selected = m }, Modifier.entrance(i + 1))
+                }
+            }
 
-            if (writing) MoodField(note, { note = it.take(60) }, "Add a short note (optional)")
+            AnimatedVisibility(
+                visible = writing,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically(),
+            ) { MoodField(note, { note = it.take(60) }, "Add a short note (optional)") }
+
             GradientButton(
                 "Share with my people", enabled = selected != null,
                 onClick = { selected?.let { onShare(it, note) } },
