@@ -1,8 +1,13 @@
 package dev.imhamid.moodlink.ui.connect
 
 import android.content.Intent
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,28 +39,28 @@ fun ConnectCard(myCode: String, vm: ConnectViewModel = hiltViewModel()) {
     ) {
         Text("Your invite code", style = MaterialTheme.typography.titleMedium)
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                myCode.ifBlank { "······" }, fontSize = 34.sp, fontWeight = FontWeight.ExtraBold,
-                letterSpacing = 5.sp, color = Ink, modifier = Modifier.weight(1f),
-            )
+            AnimatedContent(myCode.ifBlank { "······" }, modifier = Modifier.weight(1f), label = "code") { code ->
+                Text(code, fontSize = 34.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 5.sp, color = Ink)
+            }
             Box(
-                Modifier.clip(CircleShape).background(Color.White.copy(alpha = .85f))
-                    .clickable {
+                Modifier.bounceClick {
                         val send = Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"
                             putExtra(Intent.EXTRA_TEXT, "Join me on MoodLink! My code is $myCode")
                         }
                         ctx.startActivity(Intent.createChooser(send, "Share code"))
                     }
+                    .clip(CircleShape).background(Color.White.copy(alpha = .85f))
                     .padding(horizontal = 20.dp, vertical = 10.dp),
             ) { Text("Share", fontWeight = FontWeight.SemiBold, color = Ink) }
         }
         HorizontalDivider(color = Color.White.copy(alpha = .7f))
         Text("Have a friend's code?", style = MaterialTheme.typography.titleMedium)
         MoodField(vm.code, vm::onCode, "Enter 6-character code")
-        vm.message?.let {
+        val msg = vm.message
+        AnimatedVisibility(msg != null, enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
             Text(
-                it, style = MaterialTheme.typography.bodyMedium,
+                msg.orEmpty(), style = MaterialTheme.typography.bodyMedium,
                 color = if (vm.isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
             )
         }
