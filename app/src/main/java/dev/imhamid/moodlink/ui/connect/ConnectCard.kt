@@ -6,7 +6,7 @@ import dev.imhamid.moodlink.ui.components.SecondaryButton
 import dev.imhamid.moodlink.ui.components.MoodField
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-dev.imhamid.moodlink.R
+import dev.imhamid.moodlink.R
 import androidx.compose.ui.res.stringResource
 import android.content.Intent
 import androidx.compose.animation.AnimatedContent
