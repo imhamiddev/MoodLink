@@ -4,6 +4,7 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
@@ -31,7 +32,26 @@ fun Mascot(modifier: Modifier = Modifier) {
         animationSpec = infiniteRepeatable(tween(2200, easing = FastOutSlowInEasing), RepeatMode.Reverse),
         label = "float",
     )
-    Canvas(modifier.graphicsLayer { translationY = float * 8.dp.toPx() }) {
+    val tilt by t.animateFloat(
+        initialValue = -1f, targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(3400, easing = FastOutSlowInEasing), RepeatMode.Reverse),
+        label = "tilt",
+    )
+    val open by t.animateFloat(
+        initialValue = 1f, targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            keyframes {
+                durationMillis = 3800
+                1f at 0
+                1f at 3500
+                0.08f at 3620
+                1f at 3760
+            },
+            RepeatMode.Restart,
+        ),
+        label = "blink",
+    )
+    Canvas(modifier.graphicsLayer { translationY = float * 8.dp.toPx(); rotationZ = tilt * 2.5f }) {
         val w = size.width
         val h = size.height
 
@@ -53,8 +73,9 @@ fun Mascot(modifier: Modifier = Modifier) {
         drawCircle(cheek, w * .045f, Offset(w * .7f, h * .5f))
         // eyes
         listOf(w * .38f, w * .62f).forEach { x ->
-            drawCircle(Color(0xFF241638), w * .04f, Offset(x, h * .42f))
-            drawCircle(Color.White, w * .012f, Offset(x - w * .012f, h * .405f))
+            val r = w * .04f
+            drawOval(Color(0xFF241638), Offset(x - r, h * .42f - r * open), Size(2 * r, 2 * r * open))
+            if (open > .6f) drawCircle(Color.White, w * .012f, Offset(x - w * .012f, h * .405f))
         }
         // open smile
         drawArc(

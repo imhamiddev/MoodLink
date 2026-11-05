@@ -4,8 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.getValue
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dev.imhamid.moodlink.data.repo.AuthRepository
 import dev.imhamid.moodlink.ui.auth.AuthScreen
@@ -23,7 +30,16 @@ class MainActivity : ComponentActivity() {
         setContent {
             MoodLinkTheme {
                 val uid by auth.authState.collectAsState(initial = auth.currentUid)
-                if (uid == null) AuthScreen() else HomeScreen()
+                // Log in / log out cross-fades with a soft zoom. Home gets its own ViewModel per account.
+                AnimatedContent(
+                    targetState = uid,
+                    transitionSpec = {
+                        (fadeIn(tween(450)) + scaleIn(tween(450), initialScale = .94f)) togetherWith fadeOut(tween(250))
+                    },
+                    label = "root",
+                ) { id ->
+                    if (id == null) AuthScreen() else HomeScreen(vm = hiltViewModel(key = id))
+                }
             }
         }
     }

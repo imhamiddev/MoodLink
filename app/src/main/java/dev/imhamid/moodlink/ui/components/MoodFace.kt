@@ -1,7 +1,15 @@
 package dev.imhamid.moodlink.ui.components
 
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -43,11 +51,33 @@ private fun Mood.face(): Face = when (this) {
 
 /** A glossy, hand-drawn character for each mood (square canvas; pass a size). */
 @Composable
-fun MoodFace(mood: Mood?, modifier: Modifier = Modifier, squircle: Boolean = false) {
-    Canvas(modifier) { drawFace(mood?.face() ?: NoMood, squircle) }
+fun MoodFace(mood: Mood?, modifier: Modifier = Modifier, squircle: Boolean = false, animated: Boolean = false) {
+    val blink: State<Float> = if (animated) rememberBlink(mood) else remember { mutableFloatStateOf(1f) }
+    Canvas(modifier) { drawFace(mood?.face() ?: NoMood, squircle, blink.value) }
 }
 
-private fun DrawScope.drawFace(f: Face, squircle: Boolean) {
+/** Eye openness 1 -> 0.08 -> 1 every few seconds; each mood blinks on its own rhythm. */
+@Composable
+private fun rememberBlink(mood: Mood?): State<Float> {
+    val period = 3200 + (mood?.ordinal ?: 0) * 260
+    val t = rememberInfiniteTransition(label = "blink")
+    return t.animateFloat(
+        initialValue = 1f, targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            keyframes {
+                durationMillis = period
+                1f at 0
+                1f at period - 260
+                0.08f at period - 150
+                1f at period
+            },
+            RepeatMode.Restart,
+        ),
+        label = "open",
+    )
+}
+
+private fun DrawScope.drawFace(f: Face, squircle: Boolean, open: Float) {
     val w = size.minDimension
     val body = Brush.radialGradient(
         listOf(f.top, f.bottom),
@@ -60,7 +90,7 @@ private fun DrawScope.drawFace(f: Face, squircle: Boolean) {
     // glossy highlight
     drawCircle(Color.White.copy(alpha = .38f), w * .08f, Offset(w * .27f, w * .23f))
 
-    drawEyes(f.eyes, w)
+    drawEyes(f.eyes, w, open)
     drawMouth(f.mouth, w)
 
     if (f.blush) {
@@ -70,18 +100,21 @@ private fun DrawScope.drawFace(f: Face, squircle: Boolean) {
     }
 }
 
-private fun DrawScope.drawEyes(e: Eyes, w: Float) {
+private fun DrawScope.drawEyes(e: Eyes, w: Float, open: Float) {
     val ey = w * .42f
     val xs = listOf(w * .33f, w * .67f)
     val line = Stroke(width = w * .035f, cap = StrokeCap.Round)
     when (e) {
         Eyes.DOTS -> xs.forEach { x ->
-            drawCircle(Dark, w * .055f, Offset(x, ey))
-            drawCircle(Color.White, w * .015f, Offset(x - w * .015f, ey - w * .018f))
+            val r = w * .055f
+            drawOval(Dark, Offset(x - r, ey - r * open), Size(2 * r, 2 * r * open))
+            if (open > .6f) drawCircle(Color.White, w * .015f, Offset(x - w * .015f, ey - w * .018f))
         }
         Eyes.WIDE -> xs.forEach { x ->
             drawCircle(Color.White, w * .1f, Offset(x, ey))
-            drawCircle(Dark, w * .05f, Offset(x, ey + w * .01f))
+            val r = w * .05f
+            val cy = ey + w * .01f
+            drawOval(Dark, Offset(x - r, cy - r * open), Size(2 * r, 2 * r * open))
         }
         Eyes.HEARTS -> xs.forEach { x ->
             drawCircle(Color.White, w * .11f, Offset(x, ey))

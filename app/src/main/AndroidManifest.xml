@@ -25,13 +25,50 @@
 
         <receiver
             android:name=".widget.MoodWidgetReceiver"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/widget_label_friends">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/mood_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widget.MoodSpotlightReceiver"
+            android:exported="true"
+            android:label="@string/widget_label_spotlight">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/mood_spotlight_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widget.MoodListReceiver"
+            android:exported="true"
+            android:label="@string/widget_label_list">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/mood_list_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widget.MyMoodReceiver"
+            android:exported="true"
+            android:label="@string/widget_label_mine">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/my_mood_info" />
         </receiver>
     </application>
 </manifest>

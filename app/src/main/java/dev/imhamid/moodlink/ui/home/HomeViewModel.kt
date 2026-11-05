@@ -3,10 +3,9 @@ package dev.imhamid.moodlink.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import android.content.Context
-import androidx.glance.appwidget.updateAll
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.imhamid.moodlink.widget.MoodWidget
+import dev.imhamid.moodlink.widget.MoodWidgets
 import dev.imhamid.moodlink.data.model.*
 import dev.imhamid.moodlink.data.repo.*
 import kotlinx.coroutines.flow.*
@@ -35,7 +34,8 @@ class HomeViewModel @Inject constructor(
 
     init {
         // Keep the home-screen widget in sync while the app is open.
-        viewModelScope.launch { moods.observeFriends(uid).collect { MoodWidget().updateAll(context) } }
+        viewModelScope.launch { moods.observeFriends(uid).collect { MoodWidgets.updateAll(context) } }
+        viewModelScope.launch { moods.observeProfile(uid).collect { MoodWidgets.updateAll(context) } }
     }
 
     fun shareMood(mood: Mood, note: String) = viewModelScope.launch { moods.setMood(uid, mood, note) }

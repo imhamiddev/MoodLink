@@ -20,7 +20,7 @@ import dev.imhamid.moodlink.ui.theme.InkSoft
 @Composable
 fun ThoughtBubble(text: String, modifier: Modifier = Modifier) {
     val shape = RoundedCornerShape(28.dp)
-    Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier.floating(5f, 2800), horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             Modifier.clip(shape).background(Color.White.copy(alpha = .6f))
                 .border(1.dp, Color.White.copy(alpha = .9f), shape)
@@ -29,9 +29,9 @@ fun ThoughtBubble(text: String, modifier: Modifier = Modifier) {
             Text(text, style = MaterialTheme.typography.bodyMedium, color = InkSoft, textAlign = TextAlign.Center)
         }
         Row(Modifier.fillMaxWidth().padding(end = 56.dp, top = 4.dp), horizontalArrangement = Arrangement.End) {
-            Box(Modifier.size(14.dp).clip(CircleShape).background(Color.White.copy(alpha = .6f)))
+            Box(Modifier.breathing(.22f, 1400).size(14.dp).clip(CircleShape).background(Color.White.copy(alpha = .6f)))
             Spacer(Modifier.width(4.dp))
-            Box(Modifier.padding(top = 10.dp).size(8.dp).clip(CircleShape).background(Color.White.copy(alpha = .6f)))
+            Box(Modifier.padding(top = 10.dp).breathing(.3f, 1100).size(8.dp).clip(CircleShape).background(Color.White.copy(alpha = .6f)))
         }
     }
 }
