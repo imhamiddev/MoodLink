@@ -16,12 +16,16 @@ class AuthViewModel @Inject constructor(private val repo: AuthRepository) : View
     var email by mutableStateOf(""); private set
     var password by mutableStateOf(""); private set
     var signUpMode by mutableStateOf(true); private set
+    /** False = welcome page, true = the sign up / log in form. */
+    var showForm by mutableStateOf(false); private set
     var loading by mutableStateOf(false); private set
     var error by mutableStateOf<String?>(null); private set
 
     fun onName(v: String) { name = v }
     fun onEmail(v: String) { email = v }
     fun onPassword(v: String) { password = v }
+    fun start(signUp: Boolean) { signUpMode = signUp; error = null; showForm = true }
+    fun back() { showForm = false; error = null }
     fun toggleMode() { signUpMode = !signUpMode; error = null }
 
     val canSubmit get() = email.contains("@") && password.length >= 6 && (!signUpMode || name.isNotBlank())
