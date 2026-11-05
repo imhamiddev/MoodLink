@@ -51,12 +51,13 @@ fun AuthScreen(vm: AuthViewModel = hiltViewModel()) {
 
     Column(Modifier.fillMaxSize().statusBarsPadding().imePadding()) {
         Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+            LanguageSwitch(Modifier.align(Alignment.TopEnd).padding(top = 8.dp, end = 16.dp))
             ThoughtBubble(
                 stringResource(R.string.auth_body),
-                Modifier.align(Alignment.TopCenter).padding(top = 16.dp, start = 40.dp, end = 40.dp),
+                Modifier.align(Alignment.TopCenter).padding(top = 72.dp, start = 40.dp, end = 40.dp),
             )
             Mascot(
-                Modifier.padding(top = 84.dp, bottom = 8.dp)
+                Modifier.padding(top = 140.dp, bottom = 8.dp)
                     .heightIn(max = 300.dp).fillMaxHeight()
                     .aspectRatio(1f, matchHeightConstraintsFirst = true)
                     .graphicsLayer { scaleX = mascotScale; scaleY = mascotScale },
