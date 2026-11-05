@@ -1,63 +1,41 @@
 package dev.imhamid.moodlink.ui.components
 
-import androidx.compose.ui.res.stringResource
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.imhamid.moodlink.data.model.Mood
 import dev.imhamid.moodlink.ui.theme.Ink
+import dev.imhamid.moodlink.ui.theme.Line
+import dev.imhamid.moodlink.ui.theme.PanelShape
+import dev.imhamid.moodlink.ui.theme.Raised
 
-/** Big pastel tile with the mood's character, like the "How are you feeling" grid. */
+/** One mood in the picker: its face and its name on paper. Selected gets a 2dp ink border. */
 @Composable
 fun MoodTile(mood: Mood, selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    val bounce = spring<Float>(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow)
-    val scale by animateFloatAsState(if (selected) 1.04f else 1f, bounce, label = "tile")
-    val faceScale by animateFloatAsState(if (selected) 1.3f else 1f, bounce, label = "faceScale")
-    val faceRot by animateFloatAsState(if (selected) 0f else -10f, bounce, label = "faceRot")
-    val border by animateColorAsState(if (selected) Ink else Color.Transparent, label = "border")
-    val shape = RoundedCornerShape(28.dp)
-    Box(
+    Row(
         modifier
-            .bounceClick(scaleDown = .95f, onClick = onClick)
-            .height(132.dp)
-            .graphicsLayer { scaleX = scale; scaleY = scale }
-            .clip(shape)
-            .background(Brush.verticalGradient(listOf(mood.tint, mood.tint.copy(alpha = .55f))))
-            .border(3.dp, border, shape),
+            .pressable(onClick = onClick)
+            .defaultMinSize(minHeight = 72.dp)
+            .clip(PanelShape)
+            .background(Raised)
+            .border(if (selected) 2.dp else 1.dp, if (selected) Ink else Line, PanelShape)
+            .padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text(
-            stringResource(mood.labelRes), color = Ink, fontSize = 20.sp, fontWeight = FontWeight.Medium,
-            modifier = Modifier.align(Alignment.TopStart).padding(16.dp),
-        )
-        MoodFace(
-            mood,
-            Modifier.align(Alignment.BottomStart).padding(start = 14.dp, bottom = 10.dp).size(58.dp)
-                .graphicsLayer { scaleX = faceScale; scaleY = faceScale; rotationZ = faceRot },
-            squircle = true, animated = selected,
-        )
-        Box(
-            Modifier.align(Alignment.BottomEnd).padding(12.dp).size(34.dp)
-                .clip(CircleShape).background(Color.White.copy(alpha = .55f)),
-            contentAlignment = Alignment.Center,
-        ) { Crossfade(selected, label = "chip") { sel -> Text(if (sel) "✓" else "↗", color = Ink, fontSize = 16.sp) } }
+        MoodFace(mood, Modifier.size(48.dp), squircle = true, animated = selected)
+        Text(stringResource(mood.labelRes), color = Ink, style = MaterialTheme.typography.titleMedium)
     }
 }
