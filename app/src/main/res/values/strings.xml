@@ -29,4 +29,23 @@
     <string name="field_email">Email</string>
     <string name="field_password">Password (6+ characters)</string>
     <string name="error_generic">Something went wrong. Try again.</string>
+
+    <!-- Home -->
+    <string name="home_hello">Hello, %1$s</string>
+    <string name="home_hello_anon">Hello</string>
+    <string name="home_question">How are you today?</string>
+    <string name="home_share_mood">Share my mood</string>
+    <string name="home_update_mood">Update my mood</string>
+    <string name="home_sharing">You are sharing: %1$s</string>
+    <string name="home_set_mood">Set mood</string>
+    <string name="home_requests">Requests</string>
+    <string name="home_request_text">%1$s wants to connect</string>
+    <string name="action_accept">Accept</string>
+    <string name="action_decline">Decline</string>
+    <string name="home_people">Your people</string>
+    <string name="home_people_empty">No one yet. Share your invite code below to add someone.</string>
+    <string name="friend_default_name">Friend</string>
+    <string name="friend_no_mood">No mood yet</string>
+    <string name="mix_title">Mood mix</string>
+    <string name="mix_subtitle">How everyone feels right now</string>
 </resources>

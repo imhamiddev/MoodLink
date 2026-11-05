@@ -21,4 +21,23 @@
     <string name="field_email">ایمیل</string>
     <string name="field_password">رمز عبور (حداقل ۶ نویسه)</string>
     <string name="error_generic">مشکلی پیش آمد. دوباره تلاش کن.</string>
+
+    <!-- Home -->
+    <string name="home_hello">سلام، %1$s</string>
+    <string name="home_hello_anon">سلام</string>
+    <string name="home_question">امروز حالت چطور است؟</string>
+    <string name="home_share_mood">ثبت حالم</string>
+    <string name="home_update_mood">تغییر حالم</string>
+    <string name="home_sharing">حال فعلی تو: %1$s</string>
+    <string name="home_set_mood">ثبت حال</string>
+    <string name="home_requests">درخواست‌ها</string>
+    <string name="home_request_text">%1$s می‌خواهد به تو وصل شود</string>
+    <string name="action_accept">پذیرفتن</string>
+    <string name="action_decline">رد کردن</string>
+    <string name="home_people">نزدیکانت</string>
+    <string name="home_people_empty">هنوز کسی نیست. کد دعوتت را پایین‌تر برای کسی بفرست تا اضافه‌اش کنی.</string>
+    <string name="friend_default_name">دوست</string>
+    <string name="friend_no_mood">هنوز حالی ثبت نکرده</string>
+    <string name="mix_title">ترکیب حال‌ها</string>
+    <string name="mix_subtitle">حال همه، همین حالا</string>
 </resources>
