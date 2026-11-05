@@ -1,5 +1,7 @@
 package dev.imhamid.moodlink.ui.home
 
+import dev.imhamid.moodlink.R
+import androidx.compose.ui.res.stringResource
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -68,18 +70,18 @@ fun HomeScreen(vm: HomeViewModel = hiltViewModel()) {
             item { GreetingCard(name, s.me?.mood, onPick = open, Modifier.entrance(1)) }
 
             if (s.requests.isNotEmpty()) {
-                item { Text("Requests", style = MaterialTheme.typography.titleLarge, modifier = Modifier.animateItem()) }
+                item { Text(stringResource(R.string.home_requests), style = MaterialTheme.typography.titleLarge, modifier = Modifier.animateItem()) }
                 items(s.requests, key = { it.connectionId }) { r ->
                     GlassCard(Modifier.fillMaxWidth().animateItem()) {
-                        Text("${r.from.displayName} wants to connect", style = MaterialTheme.typography.titleMedium)
+                        Text(stringResource(R.string.home_request_text, r.from.displayName), style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(10.dp))
                         Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
                             Box(
                                 Modifier.bounceClick { vm.accept(r.connectionId) }
                                     .clip(CircleShape).background(CtaGradient)
                                     .padding(horizontal = 22.dp, vertical = 10.dp),
-                            ) { Text("Accept", color = Color.White, fontWeight = FontWeight.SemiBold) }
-                            TextButton(onClick = { vm.decline(r.connectionId) }) { Text("Decline", color = InkSoft) }
+                            ) { Text(stringResource(R.string.action_accept), color = Color.White, fontWeight = FontWeight.SemiBold) }
+                            TextButton(onClick = { vm.decline(r.connectionId) }) { Text(stringResource(R.string.action_decline), color = InkSoft) }
                         }
                     }
                 }
@@ -87,14 +89,14 @@ fun HomeScreen(vm: HomeViewModel = hiltViewModel()) {
 
             item {
                 Row(Modifier.entrance(2), verticalAlignment = Alignment.CenterVertically) {
-                    Text("Your people", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+                    Text(stringResource(R.string.home_people), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
                     AnimatedContent(s.friends.size, label = "count") { n -> if (n > 0) Text("$n", color = InkSoft) else Spacer(Modifier) }
                 }
             }
             if (s.friends.isEmpty()) item {
                 GlassCard(Modifier.fillMaxWidth().entrance(3)) {
                     Text(
-                        "No one yet. Share your code below to invite someone you love 💌",
+                        stringResource(R.string.home_people_empty),
                         color = InkSoft, style = MaterialTheme.typography.bodyMedium,
                     )
                 }
@@ -153,8 +155,8 @@ private fun TopBar(name: String, mood: Mood?, onProfile: () -> Unit, onMood: () 
                 },
                 label = "chipFace",
             ) { m -> MoodFace(m, Modifier.size(32.dp), animated = true) }
-            Crossfade(mood?.label ?: "Set mood", label = "chipLabel") {
-                Text(it, color = Ink, fontWeight = FontWeight.Medium, style = MaterialTheme.typography.bodyMedium)
+            Crossfade(mood, label = "chipLabel") { m ->
+                Text(stringResource(m?.labelRes ?: R.string.home_set_mood), color = Ink, fontWeight = FontWeight.Medium, style = MaterialTheme.typography.bodyMedium)
             }
         }
     }
@@ -168,11 +170,13 @@ private fun GreetingCard(
     GlassCard(modifier.fillMaxWidth()) {
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Box(Modifier.floating(3f, 3000).clip(CircleShape).background(Color.White.copy(alpha = .7f)).padding(horizontal = 20.dp, vertical = 6.dp)) {
-                Text("Hello, ${name.ifBlank { "there" }}!", color = InkSoft, style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    if (name.isBlank()) stringResource(R.string.home_hello_anon) else stringResource(R.string.home_hello, name),
+                    color = InkSoft, style = MaterialTheme.typography.bodyMedium)
             }
             Spacer(Modifier.height(8.dp))
             Text(
-                "How are you today?", style = MaterialTheme.typography.headlineMedium,
+                stringResource(R.string.home_question), style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center, color = Ink,
             )
             Spacer(Modifier.height(16.dp))
@@ -188,14 +192,14 @@ private fun GreetingCard(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Crossfade(mood, label = "sharing") { m ->
                         Text(
-                            "You're sharing: ${m?.label.orEmpty()}",
+                            stringResource(R.string.home_sharing, m?.let { stringResource(it.labelRes) }.orEmpty()),
                             style = MaterialTheme.typography.bodyMedium, color = InkSoft, textAlign = TextAlign.Center,
                         )
                     }
                     Spacer(Modifier.height(12.dp))
                 }
             }
-            GradientButton(if (mood == null) "Share my mood" else "Update my mood", onClick = { onPick(null) })
+            GradientButton(stringResource(if (mood == null) R.string.home_share_mood else R.string.home_update_mood), onClick = { onPick(null) })
         }
     }
 }
