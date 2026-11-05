@@ -26,6 +26,24 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
+/** Press feedback: a quick shrink to 97% and a light haptic tick. No ripple, no bounce. */
+fun Modifier.pressable(
+    enabled: Boolean = true,
+    scaleDown: Float = .97f,
+    onClick: () -> Unit,
+): Modifier = composed {
+    val source = remember { MutableInteractionSource() }
+    val pressed by source.collectIsPressedAsState()
+    val scale by animateFloatAsState(if (pressed) scaleDown else 1f, tween(90), label = "press")
+    val haptic = LocalHapticFeedback.current
+    this
+        .graphicsLayer { scaleX = scale; scaleY = scale }
+        .clickable(interactionSource = source, indication = null, enabled = enabled) {
+            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+            onClick()
+        }
+}
+
 /** Springy press feedback + a light haptic tick. Replaces the ripple everywhere. */
 fun Modifier.bounceClick(
     enabled: Boolean = true,
