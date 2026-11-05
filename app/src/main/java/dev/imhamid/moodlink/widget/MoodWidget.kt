@@ -27,10 +27,10 @@ import dev.imhamid.moodlink.data.model.Friend
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withTimeoutOrNull
 
-internal val WInk = Color(0xFF2B1B5E)
-internal val WInkSoft = Color(0xFF6B5F8F)
-internal val WSurface = Color(0xFFF3ECFF)
-internal val WNeutral = Color(0xFFD9CCFF)
+internal val WInk = Color(0xFF1E1B16)
+internal val WInkSoft = Color(0xFF5E574B)
+internal val WSurface = Color(0xFFF5F0E6)
+internal val WNeutral = Color(0xFFD9D1C0)
 
 /**
  * Friends widget. One implementation, three layouts picked from the size the user gives it:
