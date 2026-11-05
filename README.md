@@ -8,7 +8,7 @@ Friends and partners connect with a short invite code, then each person's curren
 ## Features
 - Email + password sign up / log in (Supabase Auth)
 - Personal 6-character invite code · send / accept / decline connection requests
-- 10 moods with pastel tiles and an optional note
+- 10 moods, one tap to share
 - Live "Your people" feed
 - Home-screen widget (Jetpack Glance) with periodic + live refresh
 
