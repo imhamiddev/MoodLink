@@ -12,7 +12,6 @@ data class UserProfile(
     /** Short shareable code others type to send a connection request. */
     @SerialName("invite_code") val inviteCode: String = "",
     @SerialName("mood_id") val moodId: String? = null,
-    val note: String = "",
     @SerialName("mood_updated_at") val moodUpdatedAt: Long = 0L,
 ) {
     val uid: String get() = id
@@ -20,6 +19,6 @@ data class UserProfile(
 
     companion object {
         /** Columns the app reads; keeps `created_at` out of the payload. */
-        const val COLUMNS = "id,display_name,email,invite_code,mood_id,note,mood_updated_at"
+        const val COLUMNS = "id,display_name,email,invite_code,mood_id,mood_updated_at"
     }
 }

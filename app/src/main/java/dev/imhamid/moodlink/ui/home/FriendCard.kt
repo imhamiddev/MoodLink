@@ -62,10 +62,6 @@ fun FriendTile(friend: Friend, modifier: Modifier = Modifier) {
                     style = MaterialTheme.typography.bodyMedium, color = InkSoft,
                 )
             }
-            if (p.note.isNotBlank()) Text(
-                "“${p.note}”", style = MaterialTheme.typography.bodyMedium,
-                color = Ink, maxLines = 2, overflow = TextOverflow.Ellipsis,
-            )
         }
         // When their mood changes the character swaps with a pop.
         AnimatedContent(
