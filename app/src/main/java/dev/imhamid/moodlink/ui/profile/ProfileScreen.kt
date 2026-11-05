@@ -1,5 +1,7 @@
 package dev.imhamid.moodlink.ui.profile
 
+import dev.imhamid.moodlink.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.tween
@@ -53,8 +55,8 @@ fun ProfileScreen(state: HomeState, onBack: () -> Unit, onLogout: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(18.dp),
     ) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            IconCircle(onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back", tint = Ink) }
-            Text("Profile", style = MaterialTheme.typography.titleLarge, textAlign = TextAlign.Center, modifier = Modifier.weight(1f))
+            IconCircle(onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.back), tint = Ink) }
+            Text(stringResource(R.string.profile_title), style = MaterialTheme.typography.titleLarge, textAlign = TextAlign.Center, modifier = Modifier.weight(1f))
             Spacer(Modifier.size(48.dp))
         }
 
@@ -67,19 +69,27 @@ fun ProfileScreen(state: HomeState, onBack: () -> Unit, onLogout: () -> Unit) {
         }
 
         Column(Modifier.entrance(1), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(me?.displayName.orEmpty().ifBlank { "You" }, style = MaterialTheme.typography.headlineMedium, color = Ink)
+            Text(me?.displayName.orEmpty().ifBlank { stringResource(R.string.profile_you) }, style = MaterialTheme.typography.headlineMedium, color = Ink)
             Text(me?.email.orEmpty(), style = MaterialTheme.typography.bodyMedium, color = InkSoft)
         }
 
         Row(Modifier.entrance(2).fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            StatCard("People", state.friends.size.toString(), Modifier.weight(1f))
-            StatCard("Feeling", me?.mood?.label ?: "—", Modifier.weight(1f))
+            StatCard(stringResource(R.string.stat_people), state.friends.size.toString(), Modifier.weight(1f))
+            StatCard(stringResource(R.string.stat_feeling), me?.mood?.let { stringResource(it.labelRes) } ?: "–", Modifier.weight(1f))
         }
 
         InviteRow(me?.inviteCode.orEmpty(), Modifier.entrance(3))
 
+        Row(
+            Modifier.entrance(4).fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(stringResource(R.string.language), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            LanguageSwitch()
+        }
+
         Box(
-            Modifier.entrance(4).fillMaxWidth().height(56.dp)
+            Modifier.entrance(5).fillMaxWidth().height(56.dp)
                 .bounceClick { confirm = true }
                 .clip(CircleShape).background(Color.White.copy(alpha = .6f))
                 .border(1.5.dp, Danger.copy(alpha = .55f), CircleShape),
@@ -87,21 +97,21 @@ fun ProfileScreen(state: HomeState, onBack: () -> Unit, onLogout: () -> Unit) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Icon(Icons.AutoMirrored.Rounded.Logout, null, tint = Danger)
-                Text("Log out", color = Danger, fontWeight = FontWeight.SemiBold)
+                Text(stringResource(R.string.profile_logout), color = Danger, fontWeight = FontWeight.SemiBold)
             }
         }
 
-        Text("MoodLink v${BuildConfig.VERSION_NAME}", color = InkSoft, style = MaterialTheme.typography.bodyMedium)
+        Text(stringResource(R.string.profile_version, BuildConfig.VERSION_NAME), color = InkSoft, style = MaterialTheme.typography.bodyMedium)
     }
 
     if (confirm) AlertDialog(
         onDismissRequest = { confirm = false },
         shape = RoundedCornerShape(28.dp),
         containerColor = Color(0xFFF8F1FF),
-        title = { Text("Log out?", fontWeight = FontWeight.Bold) },
-        text = { Text("You can log back in anytime. Your friends keep seeing your last mood.") },
-        confirmButton = { TextButton(onClick = { confirm = false; onLogout() }) { Text("Log out", color = Danger, fontWeight = FontWeight.Bold) } },
-        dismissButton = { TextButton(onClick = { confirm = false }) { Text("Stay", color = InkSoft) } },
+        title = { Text(stringResource(R.string.logout_title), fontWeight = FontWeight.Bold) },
+        text = { Text(stringResource(R.string.logout_body)) },
+        confirmButton = { TextButton(onClick = { confirm = false; onLogout() }) { Text(stringResource(R.string.profile_logout), color = Danger, fontWeight = FontWeight.Bold) } },
+        dismissButton = { TextButton(onClick = { confirm = false }) { Text(stringResource(R.string.logout_stay), color = InkSoft) } },
     )
 }
 
@@ -129,7 +139,7 @@ private fun InviteRow(code: String, modifier: Modifier = Modifier) {
     GlassCard(modifier.fillMaxWidth()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
-                Text("Invite code", style = MaterialTheme.typography.bodyMedium, color = InkSoft)
+                Text(stringResource(R.string.profile_invite_code), style = MaterialTheme.typography.bodyMedium, color = InkSoft)
                 Text(code.ifBlank { "······" }, fontSize = 28.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 4.sp, color = Ink)
             }
             Box(
@@ -138,7 +148,7 @@ private fun InviteRow(code: String, modifier: Modifier = Modifier) {
                     .padding(horizontal = 20.dp, vertical = 10.dp),
             ) {
                 AnimatedContent(copied, transitionSpec = { fadeIn(tween(150)) togetherWith fadeOut(tween(150)) }, label = "copy") {
-                    Text(if (it) "Copied ✓" else "Copy", fontWeight = FontWeight.SemiBold, color = Ink)
+                    Text(stringResource(if (it) R.string.action_copied else R.string.action_copy), fontWeight = FontWeight.SemiBold, color = Ink)
                 }
             }
         }

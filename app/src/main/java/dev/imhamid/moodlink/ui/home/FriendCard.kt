@@ -1,5 +1,7 @@
 package dev.imhamid.moodlink.ui.home
 
+import dev.imhamid.moodlink.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.Animatable
@@ -53,12 +55,12 @@ fun FriendTile(friend: Friend, modifier: Modifier = Modifier) {
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(
-                p.displayName.ifBlank { "Friend" }, style = MaterialTheme.typography.titleLarge,
+                p.displayName.ifBlank { stringResource(R.string.friend_default_name) }, style = MaterialTheme.typography.titleLarge,
                 color = Ink, maxLines = 1, overflow = TextOverflow.Ellipsis,
             )
             Crossfade(p.mood, label = "friendMood") { m ->
                 Text(
-                    m?.let { "feeling ${it.label.lowercase()}" } ?: "no mood yet",
+                    stringResource(m?.labelRes ?: R.string.friend_no_mood),
                     style = MaterialTheme.typography.bodyMedium, color = InkSoft,
                 )
             }

@@ -6,6 +6,7 @@ Friends and partners connect with a short invite code, then each person's curren
 (emoji + a short note) appears live in a home-screen widget: *"Kowsar is happy now"*, *"Kowsar is sad now"*.
 
 ## Features
+- English and Persian (RTL), switchable in the app
 - Email + password sign up / log in (Supabase Auth)
 - Personal 6-character invite code · send / accept / decline connection requests
 - 10 moods, one tap to share

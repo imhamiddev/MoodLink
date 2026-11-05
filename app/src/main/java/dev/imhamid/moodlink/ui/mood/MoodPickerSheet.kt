@@ -1,5 +1,7 @@
 package dev.imhamid.moodlink.ui.mood
 
+import dev.imhamid.moodlink.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -36,12 +38,9 @@ fun MoodPickerSheet(
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             Text(
-                buildAnnotatedString {
-                    withStyle(SpanStyle(fontWeight = FontWeight.Light, color = InkSoft)) { append("How do you describe\n") }
-                    withStyle(SpanStyle(fontWeight = FontWeight.ExtraBold, color = Ink)) { append("your feeling ") }
-                    withStyle(SpanStyle(fontWeight = FontWeight.Light, color = InkSoft)) { append("today?") }
-                },
-                fontSize = 28.sp, lineHeight = 34.sp, modifier = Modifier.entrance(0),
+                stringResource(R.string.picker_title),
+                fontSize = 28.sp, lineHeight = 34.sp, fontWeight = FontWeight.ExtraBold, color = Ink,
+                modifier = Modifier.entrance(0),
             )
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
@@ -55,7 +54,7 @@ fun MoodPickerSheet(
             }
 
             GradientButton(
-                "Share with my people", enabled = selected != null,
+                stringResource(R.string.picker_share), enabled = selected != null,
                 onClick = { selected?.let(onShare) },
             )
         }

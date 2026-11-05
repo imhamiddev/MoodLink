@@ -1,5 +1,7 @@
 package dev.imhamid.moodlink.ui.home
 
+import dev.imhamid.moodlink.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
@@ -27,8 +29,8 @@ fun MoodMix(moods: List<Mood>, modifier: Modifier = Modifier) {
     if (counts.isEmpty()) return
     val max = counts.maxOf { it.value }
     GlassCard(modifier.fillMaxWidth()) {
-        Text("Mood mix", style = MaterialTheme.typography.titleMedium)
-        Text("How everyone feels right now", style = MaterialTheme.typography.bodyMedium, color = InkSoft)
+        Text(stringResource(R.string.mix_title), style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(R.string.mix_subtitle), style = MaterialTheme.typography.bodyMedium, color = InkSoft)
         Spacer(Modifier.height(14.dp))
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.Bottom) {
             counts.forEachIndexed { i, (mood, n) ->
@@ -48,7 +50,7 @@ fun MoodMix(moods: List<Mood>, modifier: Modifier = Modifier) {
                         contentAlignment = Alignment.TopCenter,
                     ) { MoodFace(mood, Modifier.padding(top = 8.dp).size(38.dp)) }
                     Spacer(Modifier.height(6.dp))
-                    Text(mood.label, style = MaterialTheme.typography.bodyMedium, color = InkSoft)
+                    Text(stringResource(mood.labelRes), style = MaterialTheme.typography.bodyMedium, color = InkSoft)
                 }
             }
         }

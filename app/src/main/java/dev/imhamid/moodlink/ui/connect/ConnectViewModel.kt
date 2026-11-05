@@ -1,5 +1,6 @@
 package dev.imhamid.moodlink.ui.connect
 
+import dev.imhamid.moodlink.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -17,7 +18,8 @@ class ConnectViewModel @Inject constructor(
 ) : ViewModel() {
     var code by mutableStateOf(""); private set
     var loading by mutableStateOf(false); private set
-    var message by mutableStateOf<String?>(null); private set
+    /** String resource id of the status line, so it follows the chosen language. */
+    var message by mutableStateOf<Int?>(null); private set
     var isError by mutableStateOf(false); private set
 
     fun onCode(v: String) { code = InviteCode.normalize(v).take(InviteCode.LENGTH); message = null }
@@ -27,8 +29,11 @@ class ConnectViewModel @Inject constructor(
         loading = true
         viewModelScope.launch {
             runCatching { repo.sendRequest(me, code) }
-                .onSuccess { message = "Request sent! They'll see it on their home screen."; isError = false; code = "" }
-                .onFailure { message = it.message ?: "Couldn't send the request"; isError = true }
+                .onSuccess { message = R.string.connect_sent; isError = false; code = "" }
+                .onFailure {
+                    message = (it as? ConnectError)?.messageRes ?: R.string.connect_err_generic
+                    isError = true
+                }
             loading = false
         }
     }

@@ -1,5 +1,6 @@
 package dev.imhamid.moodlink
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dev.imhamid.moodlink.data.repo.AuthRepository
+import dev.imhamid.moodlink.i18n.AppLanguage
 import dev.imhamid.moodlink.ui.auth.AuthScreen
 import dev.imhamid.moodlink.ui.home.HomeScreen
 import dev.imhamid.moodlink.ui.theme.MoodLinkTheme
@@ -23,6 +25,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject lateinit var auth: AuthRepository
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(AppLanguage.wrap(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

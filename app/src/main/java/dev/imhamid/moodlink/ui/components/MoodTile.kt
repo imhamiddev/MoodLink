@@ -1,5 +1,6 @@
 package dev.imhamid.moodlink.ui.components
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
@@ -44,7 +45,7 @@ fun MoodTile(mood: Mood, selected: Boolean, onClick: () -> Unit, modifier: Modif
             .border(3.dp, border, shape),
     ) {
         Text(
-            mood.label, color = Ink, fontSize = 20.sp, fontWeight = FontWeight.Medium,
+            stringResource(mood.labelRes), color = Ink, fontSize = 20.sp, fontWeight = FontWeight.Medium,
             modifier = Modifier.align(Alignment.TopStart).padding(16.dp),
         )
         MoodFace(

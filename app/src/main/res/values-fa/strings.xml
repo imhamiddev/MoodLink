@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">مودلینک</string>
+
+    <!-- Common -->
+    <string name="back">بازگشت</string>
+    <string name="language">زبان</string>
+    <string name="language_en">English</string>
+    <string name="language_fa">فارسی</string>
+
+    <!-- Auth -->
+    <string name="auth_headline">حال تو، روی صفحه‌ی اصلی گوشی‌شان.</string>
+    <string name="auth_body">حالت را انتخاب کن. کسانی که به آن‌ها وصل شده‌ای آن را در ویجت می‌بینند. نیازی به پیام دادن نیست.</string>
+    <string name="auth_create">ساخت حساب</string>
+    <string name="auth_login">ورود</string>
+    <string name="auth_have_account">حساب داری؟</string>
+    <string name="auth_new_here">تازه آمده‌ای؟</string>
+    <string name="auth_title_signup">حساب خودت را بساز</string>
+    <string name="auth_title_login">خوش برگشتی</string>
+    <string name="field_name">نام تو</string>
+    <string name="field_email">ایمیل</string>
+    <string name="field_password">رمز عبور (حداقل ۶ نویسه)</string>
+    <string name="error_generic">مشکلی پیش آمد. دوباره تلاش کن.</string>
+
+    <!-- Home -->
+    <string name="home_hello">سلام، %1$s</string>
+    <string name="home_hello_anon">سلام</string>
+    <string name="home_question">امروز حالت چطور است؟</string>
+    <string name="home_share_mood">ثبت حالم</string>
+    <string name="home_update_mood">تغییر حالم</string>
+    <string name="home_sharing">حال فعلی تو: %1$s</string>
+    <string name="home_set_mood">ثبت حال</string>
+    <string name="home_requests">درخواست‌ها</string>
+    <string name="home_request_text">%1$s می‌خواهد به تو وصل شود</string>
+    <string name="action_accept">پذیرفتن</string>
+    <string name="action_decline">رد کردن</string>
+    <string name="home_people">نزدیکانت</string>
+    <string name="home_people_empty">هنوز کسی نیست. کد دعوتت را پایین‌تر برای کسی بفرست تا اضافه‌اش کنی.</string>
+    <string name="friend_default_name">دوست</string>
+    <string name="friend_no_mood">هنوز حالی ثبت نکرده</string>
+    <string name="mix_title">ترکیب حال‌ها</string>
+    <string name="mix_subtitle">حال همه، همین حالا</string>
+
+    <!-- Mood picker -->
+    <string name="picker_title">امروز چه حالی داری؟</string>
+    <string name="picker_share">برای نزدیکانم بفرست</string>
+
+    <!-- Connect -->
+    <string name="connect_my_code">کد دعوت تو</string>
+    <string name="connect_share">ارسال</string>
+    <string name="connect_share_text">به مودلینک بیا. کد من %1$s است.</string>
+    <string name="connect_chooser">ارسال کد</string>
+    <string name="connect_have_code">کد دوستت را داری؟</string>
+    <string name="connect_enter_code">کد ۶ نویسه‌ای را وارد کن</string>
+    <string name="connect_send">ارسال درخواست</string>
+    <string name="connect_sent">درخواست ارسال شد. آن‌ها آن را در صفحه‌ی اصلی‌شان می‌بینند.</string>
+    <string name="connect_err_generic">ارسال درخواست ممکن نشد</string>
+    <string name="connect_err_invalid">این کد درست به نظر نمی‌رسد</string>
+    <string name="connect_err_unknown">کسی با این کد پیدا نشد</string>
+    <string name="connect_err_self">این کد خودِ توست</string>
+    <string name="connect_err_existing">شما از قبل وصل هستید یا منتظر پاسخ هستید</string>
+
+    <!-- Profile -->
+    <string name="profile_title">نمایه</string>
+    <string name="profile_you">تو</string>
+    <string name="stat_people">نزدیکان</string>
+    <string name="stat_feeling">حال</string>
+    <string name="profile_invite_code">کد دعوت</string>
+    <string name="action_copy">کپی</string>
+    <string name="action_copied">کپی شد</string>
+    <string name="profile_logout">خروج از حساب</string>
+    <string name="logout_title">خروج از حساب؟</string>
+    <string name="logout_body">هر وقت خواستی دوباره وارد شو. دوستانت آخرین حالتی که ثبت کرده‌ای را می‌بینند.</string>
+    <string name="logout_stay">ماندن</string>
+    <string name="profile_version">مودلینک نسخه‌ی %1$s</string>
+
+    <!-- Moods -->
+    <string name="mood_happy">شاد</string>
+    <string name="mood_love">عاشق</string>
+    <string name="mood_calm">آرام</string>
+    <string name="mood_sleepy">خواب‌آلود</string>
+    <string name="mood_tired">خسته</string>
+    <string name="mood_sad">غمگین</string>
+    <string name="mood_miss_you">دلتنگ</string>
+    <string name="mood_angry">عصبانی</string>
+    <string name="mood_anxious">مضطرب</string>
+    <string name="mood_excited">هیجان‌زده</string>
+
+    <!-- Widgets -->
+    <string name="widget_open_login">برای ورود، مودلینک را باز کن</string>
+    <string name="widget_connect_hint">به کسی وصل شو تا حالش را ببینی</string>
+    <string name="widget_open_app">مودلینک را باز کن</string>
+    <string name="widget_set_mood">حالت را ثبت کن</string>
+    <string name="widget_feeling">حال من</string>
+    <string name="widget_no_mood">هنوز حالی ثبت نشده</string>
+
+    <!-- Widget picker -->
+    <string name="widget_description">ببین نزدیکانت همین حالا چه حالی دارند</string>
+    <string name="widget_label_friends">مودلینک · دوستان (۴×۲)</string>
+    <string name="widget_label_spotlight">مودلینک · کانون توجه (۲×۲)</string>
+    <string name="widget_label_list">مودلینک · فهرست دوستان (۴×۴)</string>
+    <string name="widget_label_mine">مودلینک · حال من (۲×۱)</string>
+    <string name="widget_description_spotlight">دوستی که تازه‌تر از همه حالش را عوض کرده</string>
+    <string name="widget_description_list">همه‌ی کسانی که به آن‌ها وصل هستی، یک‌جا</string>
+    <string name="widget_description_mine">حال فعلی خودت</string>
+
+    <!-- Auth errors -->
+    <string name="error_bad_credentials">ایمیل یا رمز عبور اشتباه است.</string>
+    <string name="error_email_taken">برای این ایمیل قبلاً حساب ساخته شده. وارد شو.</string>
+    <string name="error_network">اتصالی نیست. اینترنتت را بررسی کن و دوباره تلاش کن.</string>
+</resources>

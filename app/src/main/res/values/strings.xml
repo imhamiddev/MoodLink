@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">MoodLink</string>
+    
     <string name="widget_description">See how your people feel right now</string>
     <string name="widget_label_friends">MoodLink · Friends (4×2)</string>
     <string name="widget_label_spotlight">MoodLink · Spotlight (2×2)</string>
@@ -8,4 +9,101 @@
     <string name="widget_description_spotlight">The friend whose mood changed most recently</string>
     <string name="widget_description_list">Everyone you are connected with, at a glance</string>
     <string name="widget_description_mine">Your own current mood</string>
+
+    <!-- Common -->
+    <string name="back">Back</string>
+    <string name="language">Language</string>
+    <string name="language_en">English</string>
+    <string name="language_fa">فارسی</string>
+
+    <!-- Auth -->
+    <string name="auth_headline">Your mood, on their home screen.</string>
+    <string name="auth_body">Pick how you feel. The people you connect with see it in a widget. No texting needed.</string>
+    <string name="auth_create">Create an account</string>
+    <string name="auth_login">Log in</string>
+    <string name="auth_have_account">Already have an account?</string>
+    <string name="auth_new_here">New here?</string>
+    <string name="auth_title_signup">Create your account</string>
+    <string name="auth_title_login">Welcome back</string>
+    <string name="field_name">Your name</string>
+    <string name="field_email">Email</string>
+    <string name="field_password">Password (6+ characters)</string>
+    <string name="error_generic">Something went wrong. Try again.</string>
+
+    <!-- Home -->
+    <string name="home_hello">Hello, %1$s</string>
+    <string name="home_hello_anon">Hello</string>
+    <string name="home_question">How are you today?</string>
+    <string name="home_share_mood">Share my mood</string>
+    <string name="home_update_mood">Update my mood</string>
+    <string name="home_sharing">You are sharing: %1$s</string>
+    <string name="home_set_mood">Set mood</string>
+    <string name="home_requests">Requests</string>
+    <string name="home_request_text">%1$s wants to connect</string>
+    <string name="action_accept">Accept</string>
+    <string name="action_decline">Decline</string>
+    <string name="home_people">Your people</string>
+    <string name="home_people_empty">No one yet. Share your invite code below to add someone.</string>
+    <string name="friend_default_name">Friend</string>
+    <string name="friend_no_mood">No mood yet</string>
+    <string name="mix_title">Mood mix</string>
+    <string name="mix_subtitle">How everyone feels right now</string>
+
+    <!-- Mood picker -->
+    <string name="picker_title">How do you feel today?</string>
+    <string name="picker_share">Share with my people</string>
+
+    <!-- Connect -->
+    <string name="connect_my_code">Your invite code</string>
+    <string name="connect_share">Share</string>
+    <string name="connect_share_text">Join me on MoodLink. My code is %1$s</string>
+    <string name="connect_chooser">Share code</string>
+    <string name="connect_have_code">Have a friend\'s code?</string>
+    <string name="connect_enter_code">Enter the 6-character code</string>
+    <string name="connect_send">Send request</string>
+    <string name="connect_sent">Request sent. They will see it on their home screen.</string>
+    <string name="connect_err_generic">Couldn\'t send the request</string>
+    <string name="connect_err_invalid">That code doesn\'t look right</string>
+    <string name="connect_err_unknown">No one has this code</string>
+    <string name="connect_err_self">That is your own code</string>
+    <string name="connect_err_existing">You are already connected, or waiting for a reply</string>
+
+    <!-- Profile -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_you">You</string>
+    <string name="stat_people">People</string>
+    <string name="stat_feeling">Feeling</string>
+    <string name="profile_invite_code">Invite code</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_copied">Copied</string>
+    <string name="profile_logout">Log out</string>
+    <string name="logout_title">Log out?</string>
+    <string name="logout_body">You can log back in anytime. Your friends keep seeing your last mood.</string>
+    <string name="logout_stay">Stay</string>
+    <string name="profile_version">MoodLink v%1$s</string>
+
+    <!-- Moods -->
+    <string name="mood_happy">Happy</string>
+    <string name="mood_love">In love</string>
+    <string name="mood_calm">Calm</string>
+    <string name="mood_sleepy">Sleepy</string>
+    <string name="mood_tired">Tired</string>
+    <string name="mood_sad">Sad</string>
+    <string name="mood_miss_you">Miss you</string>
+    <string name="mood_angry">Angry</string>
+    <string name="mood_anxious">Anxious</string>
+    <string name="mood_excited">Excited</string>
+
+    <!-- Widgets -->
+    <string name="widget_open_login">Open MoodLink to log in</string>
+    <string name="widget_connect_hint">Connect with someone to see their mood</string>
+    <string name="widget_open_app">Open MoodLink</string>
+    <string name="widget_set_mood">Set your mood</string>
+    <string name="widget_feeling">I am feeling</string>
+    <string name="widget_no_mood">No mood yet</string>
+
+    <!-- Auth errors -->
+    <string name="error_bad_credentials">Wrong email or password.</string>
+    <string name="error_email_taken">This email already has an account. Try logging in.</string>
+    <string name="error_network">No connection. Check your internet and try again.</string>
 </resources>

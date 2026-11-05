@@ -1,5 +1,7 @@
 package dev.imhamid.moodlink.widget
 
+import dev.imhamid.moodlink.R
+import dev.imhamid.moodlink.i18n.AppLanguage
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
@@ -30,11 +32,12 @@ class MyMoodWidget : GlanceAppWidget() {
         val ep = WidgetEntryPoint.get(context)
         val uid = ep.auth().currentUid
         val me = uid?.let { withTimeoutOrNull(8_000) { ep.moods().observeProfile(it).first() } }
-        provideContent { Content(uid != null, me) }
+        val strings = AppLanguage.wrap(context)
+        provideContent { Content(strings, uid != null, me) }
     }
 
     @Composable
-    private fun Content(signedIn: Boolean, me: UserProfile?) {
+    private fun Content(ctx: Context, signedIn: Boolean, me: UserProfile?) {
         val size = LocalSize.current
         val mood = me?.mood
         Box(
@@ -44,7 +47,7 @@ class MyMoodWidget : GlanceAppWidget() {
         ) {
             when {
                 !signedIn || me == null -> Text(
-                    "Open MoodLink 💜",
+                    ctx.getString(R.string.widget_open_app),
                     style = TextStyle(color = ColorProvider(WInk), fontSize = 13.sp, textAlign = TextAlign.Center),
                 )
                 size.width < 150.dp || size.height >= 110.dp -> Column(
@@ -54,7 +57,7 @@ class MyMoodWidget : GlanceAppWidget() {
                 ) {
                     Text(mood?.emoji ?: "💭", style = TextStyle(fontSize = 34.sp))
                     Text(
-                        mood?.label ?: "Set your mood",
+                        ctx.getString(mood?.labelRes ?: R.string.widget_set_mood),
                         style = TextStyle(color = ColorProvider(WInk), fontWeight = FontWeight.Bold, fontSize = 14.sp, textAlign = TextAlign.Center),
                         maxLines = 1,
                     )
@@ -63,9 +66,9 @@ class MyMoodWidget : GlanceAppWidget() {
                     Text(mood?.emoji ?: "💭", style = TextStyle(fontSize = 30.sp))
                     Spacer(GlanceModifier.width(10.dp))
                     Column {
-                        Text("I'm feeling", style = TextStyle(color = ColorProvider(WInkSoft), fontSize = 11.sp))
+                        Text(ctx.getString(R.string.widget_feeling), style = TextStyle(color = ColorProvider(WInkSoft), fontSize = 11.sp))
                         Text(
-                            mood?.label ?: "Set your mood",
+                            ctx.getString(mood?.labelRes ?: R.string.widget_set_mood),
                             style = TextStyle(color = ColorProvider(WInk), fontWeight = FontWeight.Bold, fontSize = 15.sp),
                             maxLines = 1,
                         )
