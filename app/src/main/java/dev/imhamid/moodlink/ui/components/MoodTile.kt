@@ -36,12 +36,12 @@ fun MoodTile(mood: Mood, selected: Boolean, onClick: () -> Unit, modifier: Modif
     val shape = RoundedCornerShape(28.dp)
     Box(
         modifier
+            .bounceClick(scaleDown = .95f, onClick = onClick)
             .height(132.dp)
             .graphicsLayer { scaleX = scale; scaleY = scale }
             .clip(shape)
             .background(Brush.verticalGradient(listOf(mood.tint, mood.tint.copy(alpha = .55f))))
-            .border(3.dp, border, shape)
-            .bounceClick(scaleDown = .95f, onClick = onClick),
+            .border(3.dp, border, shape),
     ) {
         Text(
             mood.label, color = Ink, fontSize = 20.sp, fontWeight = FontWeight.Medium,

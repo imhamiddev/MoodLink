@@ -34,13 +34,13 @@ fun GradientButton(
     val alpha by animateFloatAsState(if (enabled) 1f else .5f, label = "btnAlpha")
     Box(
         modifier
+            .bounceClick(enabled = enabled && !loading, onClick = onClick)
             .fillMaxWidth()
             .height(58.dp)
             .alpha(alpha)
             .shadow(10.dp, CircleShape, ambientColor = Purple500, spotColor = Purple500)
             .clip(CircleShape)
-            .background(CtaGradient)
-            .bounceClick(enabled = enabled && !loading, onClick = onClick),
+            .background(CtaGradient),
         contentAlignment = Alignment.Center,
     ) {
         Crossfade(targetState = loading, label = "btnContent") { busy ->
@@ -57,12 +57,12 @@ fun GradientButton(
 fun GhostButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Box(
         modifier
+            .bounceClick(onClick = onClick)
             .fillMaxWidth()
             .height(54.dp)
             .clip(CircleShape)
             .background(Color.White.copy(alpha = .9f))
-            .border(1.dp, Color.White, CircleShape)
-            .bounceClick(onClick = onClick),
+            .border(1.dp, Color.White, CircleShape),
         contentAlignment = Alignment.Center,
     ) { Crossfade(targetState = text, label = "ghostText") { t -> Text(t, color = Ink, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Medium) } }
 }

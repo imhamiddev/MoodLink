@@ -21,7 +21,7 @@ fun IconCircle(
     content: @Composable () -> Unit,
 ) {
     Box(
-        modifier.size(size).clip(CircleShape).background(Color.White.copy(alpha = .78f)).bounceClick(onClick = onClick),
+        modifier.bounceClick(onClick = onClick).size(size).clip(CircleShape).background(Color.White.copy(alpha = .78f)),
         contentAlignment = Alignment.Center,
     ) { content() }
 }
