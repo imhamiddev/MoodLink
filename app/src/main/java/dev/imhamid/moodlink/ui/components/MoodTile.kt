@@ -33,7 +33,7 @@ fun MoodTile(mood: Mood, selected: Boolean, onClick: () -> Unit, modifier: Modif
     val scale by animateFloatAsState(if (selected) 1.04f else 1f, bounce, label = "tile")
     val faceScale by animateFloatAsState(if (selected) 1.3f else 1f, bounce, label = "faceScale")
     val faceRot by animateFloatAsState(if (selected) 0f else -10f, bounce, label = "faceRot")
-    val border by animateColorAsState(if (selected) mood.tintDark else Color.Transparent, label = "border")
+    val border by animateColorAsState(if (selected) Ink else Color.Transparent, label = "border")
     val shape = RoundedCornerShape(28.dp)
     Box(
         modifier
