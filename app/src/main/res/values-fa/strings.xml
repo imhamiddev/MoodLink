@@ -103,4 +103,9 @@
     <string name="widget_description_spotlight">دوستی که تازه‌تر از همه حالش را عوض کرده</string>
     <string name="widget_description_list">همه‌ی کسانی که به آن‌ها وصل هستی، یک‌جا</string>
     <string name="widget_description_mine">حال فعلی خودت</string>
+
+    <!-- Auth errors -->
+    <string name="error_bad_credentials">ایمیل یا رمز عبور اشتباه است.</string>
+    <string name="error_email_taken">برای این ایمیل قبلاً حساب ساخته شده. وارد شو.</string>
+    <string name="error_network">اتصالی نیست. اینترنتت را بررسی کن و دوباره تلاش کن.</string>
 </resources>

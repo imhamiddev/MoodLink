@@ -101,4 +101,9 @@
     <string name="widget_set_mood">Set your mood</string>
     <string name="widget_feeling">I am feeling</string>
     <string name="widget_no_mood">No mood yet</string>
+
+    <!-- Auth errors -->
+    <string name="error_bad_credentials">Wrong email or password.</string>
+    <string name="error_email_taken">This email already has an account. Try logging in.</string>
+    <string name="error_network">No connection. Check your internet and try again.</string>
 </resources>

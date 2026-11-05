@@ -1,5 +1,7 @@
 package dev.imhamid.moodlink.ui.auth
 
+import dev.imhamid.moodlink.R
+import androidx.compose.ui.res.stringResource
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -50,7 +52,7 @@ fun AuthScreen(vm: AuthViewModel = hiltViewModel()) {
     Column(Modifier.fillMaxSize().statusBarsPadding().imePadding()) {
         Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
             ThoughtBubble(
-                "Daily moods, shared with the people you love",
+                stringResource(R.string.auth_body),
                 Modifier.align(Alignment.TopCenter).padding(top = 16.dp, start = 40.dp, end = 40.dp),
             )
             Mascot(
@@ -94,46 +96,42 @@ fun AuthScreen(vm: AuthViewModel = hiltViewModel()) {
 
 @Composable
 private fun WelcomeContent(vm: AuthViewModel) {
-    Text("MoodLink", color = Purple600, fontWeight = FontWeight.ExtraBold, style = MaterialTheme.typography.titleMedium)
+    Text(stringResource(R.string.app_name), color = Purple600, fontWeight = FontWeight.ExtraBold, style = MaterialTheme.typography.titleMedium)
     Text(
-        "Feel it. Share it.\nStay close.",
+        stringResource(R.string.auth_headline),
         style = MaterialTheme.typography.headlineMedium, textAlign = TextAlign.Center, color = Ink,
     )
-    Text(
-        "Let the people you love see how you feel, right on their home screen.",
-        style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center, color = InkSoft,
-    )
     Spacer(Modifier.height(4.dp))
-    GradientButton("Get Started", onClick = { vm.start(true) })
-    SwitchLine("Already have an account? ", "Log In") { vm.start(false) }
+    GradientButton(stringResource(R.string.auth_create), onClick = { vm.start(true) })
+    SwitchLine(stringResource(R.string.auth_have_account), stringResource(R.string.auth_login)) { vm.start(false) }
 }
 
 @Composable
 private fun FormContent(vm: AuthViewModel) {
     Text(
-        if (vm.signUpMode) "Create your account" else "Welcome back",
+        stringResource(if (vm.signUpMode) R.string.auth_title_signup else R.string.auth_title_login),
         style = MaterialTheme.typography.headlineMedium, color = Ink,
     )
-    if (vm.signUpMode) MoodField(vm.name, vm::onName, "Your name")
-    MoodField(vm.email, vm::onEmail, "Email", keyboardType = KeyboardType.Email)
-    MoodField(vm.password, vm::onPassword, "Password (6+ characters)", password = true)
+    if (vm.signUpMode) MoodField(vm.name, vm::onName, stringResource(R.string.field_name))
+    MoodField(vm.email, vm::onEmail, stringResource(R.string.field_email), keyboardType = KeyboardType.Email)
+    MoodField(vm.password, vm::onPassword, stringResource(R.string.field_password), password = true)
     val err = vm.error
     AnimatedVisibility(visible = err != null, enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
-        Text(err.orEmpty(), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center)
+        Text(err?.let { stringResource(it) }.orEmpty(), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center)
     }
     GradientButton(
-        if (vm.signUpMode) "Create account" else "Log in",
+        stringResource(if (vm.signUpMode) R.string.auth_create else R.string.auth_login),
         onClick = vm::submit, enabled = vm.canSubmit, loading = vm.loading,
     )
-    if (vm.signUpMode) SwitchLine("Already have an account? ", "Log In") { vm.toggleMode() }
-    else SwitchLine("New here? ", "Sign Up") { vm.toggleMode() }
-    Text("Back", color = InkSoft, modifier = Modifier.bounceClick { vm.back() }.padding(8.dp))
+    if (vm.signUpMode) SwitchLine(stringResource(R.string.auth_have_account), stringResource(R.string.auth_login)) { vm.toggleMode() }
+    else SwitchLine(stringResource(R.string.auth_new_here), stringResource(R.string.auth_create)) { vm.toggleMode() }
+    Text(stringResource(R.string.back), color = InkSoft, modifier = Modifier.bounceClick { vm.back() }.padding(8.dp))
 }
 
 @Composable
 private fun SwitchLine(prefix: String, action: String, onClick: () -> Unit) {
     Row(Modifier.bounceClick(onClick = onClick).padding(8.dp)) {
-        Text(prefix, color = InkSoft, style = MaterialTheme.typography.bodyMedium)
+        Text("$prefix ", color = InkSoft, style = MaterialTheme.typography.bodyMedium)
         Text(action, color = Ink, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyMedium)
     }
 }
