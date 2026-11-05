@@ -48,4 +48,8 @@
     <string name="friend_no_mood">No mood yet</string>
     <string name="mix_title">Mood mix</string>
     <string name="mix_subtitle">How everyone feels right now</string>
+
+    <!-- Mood picker -->
+    <string name="picker_title">How do you feel today?</string>
+    <string name="picker_share">Share with my people</string>
 </resources>

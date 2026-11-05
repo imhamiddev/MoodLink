@@ -40,4 +40,8 @@
     <string name="friend_no_mood">هنوز حالی ثبت نکرده</string>
     <string name="mix_title">ترکیب حال‌ها</string>
     <string name="mix_subtitle">حال همه، همین حالا</string>
+
+    <!-- Mood picker -->
+    <string name="picker_title">امروز چه حالی داری؟</string>
+    <string name="picker_share">برای نزدیکانم بفرست</string>
 </resources>
