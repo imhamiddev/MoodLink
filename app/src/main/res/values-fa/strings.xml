@@ -108,4 +108,10 @@
     <string name="error_bad_credentials">ایمیل یا رمز عبور اشتباه است.</string>
     <string name="error_email_taken">برای این ایمیل قبلاً حساب ساخته شده. وارد شو.</string>
     <string name="error_network">اتصالی نیست. اینترنتت را بررسی کن و دوباره تلاش کن.</string>
+
+    <!-- Relative time -->
+    <string name="time_now">همین الان</string>
+    <string name="time_minutes">%1$d دقیقه پیش</string>
+    <string name="time_hours">%1$d ساعت پیش</string>
+    <string name="time_days">%1$d روز پیش</string>
 </resources>
