@@ -85,4 +85,12 @@
     <string name="mood_angry">عصبانی</string>
     <string name="mood_anxious">مضطرب</string>
     <string name="mood_excited">هیجان‌زده</string>
+
+    <!-- Widgets -->
+    <string name="widget_open_login">برای ورود، مودلینک را باز کن</string>
+    <string name="widget_connect_hint">به کسی وصل شو تا حالش را ببینی</string>
+    <string name="widget_open_app">مودلینک را باز کن</string>
+    <string name="widget_set_mood">حالت را ثبت کن</string>
+    <string name="widget_feeling">حال من</string>
+    <string name="widget_no_mood">هنوز حالی ثبت نشده</string>
 </resources>
