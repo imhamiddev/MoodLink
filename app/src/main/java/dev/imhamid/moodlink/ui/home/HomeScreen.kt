@@ -65,7 +65,7 @@ fun HomeScreen(vm: HomeViewModel = hiltViewModel()) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             item { TopBar(name, s.me?.mood, onProfile = { profile = true }, onMood = { open(null) }, Modifier.entrance(0)) }
-            item { GreetingCard(name, s.me?.mood, s.me?.note.orEmpty(), onPick = open, Modifier.entrance(1)) }
+            item { GreetingCard(name, s.me?.mood, onPick = open, Modifier.entrance(1)) }
 
             if (s.requests.isNotEmpty()) {
                 item { Text("Requests", style = MaterialTheme.typography.titleLarge, modifier = Modifier.animateItem()) }
@@ -123,7 +123,7 @@ fun HomeScreen(vm: HomeViewModel = hiltViewModel()) {
     if (picker) MoodPickerSheet(
         current = preselect ?: s.me?.mood,
         onDismiss = { picker = false },
-        onShare = { m, n -> vm.shareMood(m, n); picker = false },
+        onShare = { m -> vm.shareMood(m); picker = false },
     )
 }
 
@@ -163,7 +163,7 @@ private fun TopBar(name: String, mood: Mood?, onProfile: () -> Unit, onMood: () 
 /** "Hello, Name! How are you today?" with the quick-pick mood circles. */
 @Composable
 private fun GreetingCard(
-    name: String, mood: Mood?, note: String, onPick: (Mood?) -> Unit, modifier: Modifier = Modifier,
+    name: String, mood: Mood?, onPick: (Mood?) -> Unit, modifier: Modifier = Modifier,
 ) {
     GlassCard(modifier.fillMaxWidth()) {
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -186,9 +186,9 @@ private fun GreetingCard(
                 exit = fadeOut() + shrinkVertically(),
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Crossfade(mood to note, label = "sharing") { (m, n) ->
+                    Crossfade(mood, label = "sharing") { m ->
                         Text(
-                            "You're sharing: ${m?.label.orEmpty()}" + if (n.isNotBlank()) " · “$n”" else "",
+                            "You're sharing: ${m?.label.orEmpty()}",
                             style = MaterialTheme.typography.bodyMedium, color = InkSoft, textAlign = TextAlign.Center,
                         )
                     }
