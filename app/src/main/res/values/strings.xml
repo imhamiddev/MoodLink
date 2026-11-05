@@ -52,4 +52,19 @@
     <!-- Mood picker -->
     <string name="picker_title">How do you feel today?</string>
     <string name="picker_share">Share with my people</string>
+
+    <!-- Connect -->
+    <string name="connect_my_code">Your invite code</string>
+    <string name="connect_share">Share</string>
+    <string name="connect_share_text">Join me on MoodLink. My code is %1$s</string>
+    <string name="connect_chooser">Share code</string>
+    <string name="connect_have_code">Have a friend\'s code?</string>
+    <string name="connect_enter_code">Enter the 6-character code</string>
+    <string name="connect_send">Send request</string>
+    <string name="connect_sent">Request sent. They will see it on their home screen.</string>
+    <string name="connect_err_generic">Couldn\'t send the request</string>
+    <string name="connect_err_invalid">That code doesn\'t look right</string>
+    <string name="connect_err_unknown">No one has this code</string>
+    <string name="connect_err_self">That is your own code</string>
+    <string name="connect_err_existing">You are already connected, or waiting for a reply</string>
 </resources>

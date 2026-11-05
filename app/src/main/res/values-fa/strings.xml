@@ -44,4 +44,19 @@
     <!-- Mood picker -->
     <string name="picker_title">امروز چه حالی داری؟</string>
     <string name="picker_share">برای نزدیکانم بفرست</string>
+
+    <!-- Connect -->
+    <string name="connect_my_code">کد دعوت تو</string>
+    <string name="connect_share">ارسال</string>
+    <string name="connect_share_text">به مودلینک بیا. کد من %1$s است.</string>
+    <string name="connect_chooser">ارسال کد</string>
+    <string name="connect_have_code">کد دوستت را داری؟</string>
+    <string name="connect_enter_code">کد ۶ نویسه‌ای را وارد کن</string>
+    <string name="connect_send">ارسال درخواست</string>
+    <string name="connect_sent">درخواست ارسال شد. آن‌ها آن را در صفحه‌ی اصلی‌شان می‌بینند.</string>
+    <string name="connect_err_generic">ارسال درخواست ممکن نشد</string>
+    <string name="connect_err_invalid">این کد درست به نظر نمی‌رسد</string>
+    <string name="connect_err_unknown">کسی با این کد پیدا نشد</string>
+    <string name="connect_err_self">این کد خودِ توست</string>
+    <string name="connect_err_existing">شما از قبل وصل هستید یا منتظر پاسخ هستید</string>
 </resources>
