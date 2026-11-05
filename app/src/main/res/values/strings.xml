@@ -67,4 +67,18 @@
     <string name="connect_err_unknown">No one has this code</string>
     <string name="connect_err_self">That is your own code</string>
     <string name="connect_err_existing">You are already connected, or waiting for a reply</string>
+
+    <!-- Profile -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_you">You</string>
+    <string name="stat_people">People</string>
+    <string name="stat_feeling">Feeling</string>
+    <string name="profile_invite_code">Invite code</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_copied">Copied</string>
+    <string name="profile_logout">Log out</string>
+    <string name="logout_title">Log out?</string>
+    <string name="logout_body">You can log back in anytime. Your friends keep seeing your last mood.</string>
+    <string name="logout_stay">Stay</string>
+    <string name="profile_version">MoodLink v%1$s</string>
 </resources>

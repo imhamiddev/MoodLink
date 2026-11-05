@@ -59,4 +59,18 @@
     <string name="connect_err_unknown">کسی با این کد پیدا نشد</string>
     <string name="connect_err_self">این کد خودِ توست</string>
     <string name="connect_err_existing">شما از قبل وصل هستید یا منتظر پاسخ هستید</string>
+
+    <!-- Profile -->
+    <string name="profile_title">نمایه</string>
+    <string name="profile_you">تو</string>
+    <string name="stat_people">نزدیکان</string>
+    <string name="stat_feeling">حال</string>
+    <string name="profile_invite_code">کد دعوت</string>
+    <string name="action_copy">کپی</string>
+    <string name="action_copied">کپی شد</string>
+    <string name="profile_logout">خروج از حساب</string>
+    <string name="logout_title">خروج از حساب؟</string>
+    <string name="logout_body">هر وقت خواستی دوباره وارد شو. دوستانت آخرین حالتی که ثبت کرده‌ای را می‌بینند.</string>
+    <string name="logout_stay">ماندن</string>
+    <string name="profile_version">مودلینک نسخه‌ی %1$s</string>
 </resources>
