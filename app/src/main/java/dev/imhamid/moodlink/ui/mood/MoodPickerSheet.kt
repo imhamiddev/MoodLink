@@ -1,10 +1,5 @@
 package dev.imhamid.moodlink.ui.mood
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -20,9 +15,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.imhamid.moodlink.data.model.Mood
-import dev.imhamid.moodlink.ui.components.GhostButton
 import dev.imhamid.moodlink.ui.components.GradientButton
-import dev.imhamid.moodlink.ui.components.MoodField
 import dev.imhamid.moodlink.ui.components.MoodTile
 import dev.imhamid.moodlink.ui.components.entrance
 import dev.imhamid.moodlink.ui.theme.Ink
@@ -33,11 +26,9 @@ import dev.imhamid.moodlink.ui.theme.InkSoft
 fun MoodPickerSheet(
     current: Mood?,
     onDismiss: () -> Unit,
-    onShare: (Mood, String) -> Unit,
+    onShare: (Mood) -> Unit,
 ) {
     var selected by remember { mutableStateOf(current) }
-    var note by remember { mutableStateOf("") }
-    var writing by remember { mutableStateOf(false) }
 
     ModalBottomSheet(onDismissRequest = onDismiss, containerColor = Color(0xFFF6EEFF)) {
         Column(
@@ -63,17 +54,10 @@ fun MoodPickerSheet(
                 }
             }
 
-            AnimatedVisibility(
-                visible = writing,
-                enter = fadeIn() + expandVertically(),
-                exit = fadeOut() + shrinkVertically(),
-            ) { MoodField(note, { note = it.take(60) }, "Add a short note (optional)") }
-
             GradientButton(
                 "Share with my people", enabled = selected != null,
-                onClick = { selected?.let { onShare(it, note) } },
+                onClick = { selected?.let(onShare) },
             )
-            GhostButton(if (writing) "Hide note" else "Write your thoughts", onClick = { writing = !writing })
         }
     }
 }
