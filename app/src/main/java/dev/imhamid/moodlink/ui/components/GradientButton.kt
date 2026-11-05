@@ -3,7 +3,6 @@ package dev.imhamid.moodlink.ui.components
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -20,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.imhamid.moodlink.ui.theme.CtaGradient
-import dev.imhamid.moodlink.ui.theme.Ink
 import dev.imhamid.moodlink.ui.theme.Purple500
 
 @Composable
@@ -50,19 +48,4 @@ fun GradientButton(
             }
         }
     }
-}
-
-/** White pill button, e.g. "Write your thoughts". */
-@Composable
-fun GhostButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Box(
-        modifier
-            .bounceClick(onClick = onClick)
-            .fillMaxWidth()
-            .height(54.dp)
-            .clip(CircleShape)
-            .background(Color.White.copy(alpha = .9f))
-            .border(1.dp, Color.White, CircleShape),
-        contentAlignment = Alignment.Center,
-    ) { Crossfade(targetState = text, label = "ghostText") { t -> Text(t, color = Ink, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Medium) } }
 }
