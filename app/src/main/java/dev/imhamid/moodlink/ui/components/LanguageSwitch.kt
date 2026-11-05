@@ -1,6 +1,7 @@
 package dev.imhamid.moodlink.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -22,6 +23,9 @@ import dev.imhamid.moodlink.i18n.AppLanguage
 import dev.imhamid.moodlink.i18n.Lang
 import dev.imhamid.moodlink.i18n.findActivity
 import dev.imhamid.moodlink.ui.theme.Ink
+import dev.imhamid.moodlink.ui.theme.Line
+import dev.imhamid.moodlink.ui.theme.Paper
+import dev.imhamid.moodlink.ui.theme.Raised
 
 /** Two-option switch between English and Persian. Each name is written in its own language. */
 @Composable
@@ -29,7 +33,7 @@ fun LanguageSwitch(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val current = AppLanguage.current(context)
     Row(
-        modifier.clip(RoundedCornerShape(14.dp)).background(Color.White.copy(alpha = .7f)).padding(4.dp),
+        modifier.clip(RoundedCornerShape(14.dp)).background(Raised).border(1.dp, Line, RoundedCornerShape(14.dp)).padding(4.dp),
     ) {
         Lang.entries.forEach { lang ->
             val selected = lang == current
@@ -44,7 +48,7 @@ fun LanguageSwitch(modifier: Modifier = Modifier) {
             ) {
                 Text(
                     stringResource(if (lang == Lang.EN) R.string.language_en else R.string.language_fa),
-                    color = if (selected) Color.White else Ink,
+                    color = if (selected) Paper else Ink,
                     fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal,
                 )
             }
