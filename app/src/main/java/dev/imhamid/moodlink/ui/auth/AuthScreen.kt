@@ -1,138 +1,141 @@
 package dev.imhamid.moodlink.ui.auth
 
-import dev.imhamid.moodlink.R
-import androidx.compose.ui.res.stringResource
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.imhamid.moodlink.ui.components.*
+import dev.imhamid.moodlink.R
+import dev.imhamid.moodlink.data.model.Mood
+import dev.imhamid.moodlink.ui.components.LanguageSwitch
+import dev.imhamid.moodlink.ui.components.MoodField
+import dev.imhamid.moodlink.ui.components.MoodFace
+import dev.imhamid.moodlink.ui.components.PrimaryButton
+import dev.imhamid.moodlink.ui.components.SecondaryButton
+import dev.imhamid.moodlink.ui.components.pressable
+import dev.imhamid.moodlink.ui.theme.Accent
+import dev.imhamid.moodlink.ui.theme.Danger
 import dev.imhamid.moodlink.ui.theme.Ink
 import dev.imhamid.moodlink.ui.theme.InkSoft
-import dev.imhamid.moodlink.ui.theme.Purple600
 
 @Composable
 fun AuthScreen(vm: AuthViewModel = hiltViewModel()) {
     BackHandler(enabled = vm.showForm) { vm.back() }
-    val mascotScale by animateFloatAsState(
-        if (vm.showForm) .8f else 1f,
-        spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow),
-        label = "mascotScale",
-    )
 
-    Column(Modifier.fillMaxSize().statusBarsPadding().imePadding()) {
-        Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-            LanguageSwitch(Modifier.align(Alignment.TopEnd).padding(top = 8.dp, end = 16.dp))
-            ThoughtBubble(
-                stringResource(R.string.auth_body),
-                Modifier.align(Alignment.TopCenter).padding(top = 72.dp, start = 40.dp, end = 40.dp),
+    Column(
+        Modifier.fillMaxSize().systemBarsPadding().imePadding()
+            .verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(28.dp),
+    ) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                stringResource(R.string.app_name), color = Ink,
+                style = MaterialTheme.typography.titleLarge,
             )
-            Mascot(
-                Modifier.padding(top = 140.dp, bottom = 8.dp)
-                    .heightIn(max = 300.dp).fillMaxHeight()
-                    .aspectRatio(1f, matchHeightConstraintsFirst = true)
-                    .graphicsLayer { scaleX = mascotScale; scaleY = mascotScale },
-            )
+            LanguageSwitch()
         }
+        AnimatedContent(
+            targetState = vm.showForm,
+            transitionSpec = { fadeIn(tween(200)) togetherWith fadeOut(tween(120)) },
+            label = "authContent",
+        ) { form -> if (form) FormContent(vm) else WelcomeContent(vm) }
+    }
+}
 
-        Surface(
-            modifier = Modifier.animateContentSize(spring(dampingRatio = .8f, stiffness = Spring.StiffnessMediumLow)),
-            shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp),
-            color = Color.White.copy(alpha = .66f),
-        ) {
-            Column(
-                Modifier.fillMaxWidth().navigationBarsPadding()
-                    .verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 28.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(14.dp),
-            ) {
-                AnimatedContent(
-                    targetState = vm.showForm,
-                    transitionSpec = {
-                        val dir = if (targetState) 1 else -1
-                        (slideInHorizontally(tween(380)) { dir * it / 3 } + fadeIn(tween(380))) togetherWith
-                            (slideOutHorizontally(tween(260)) { -dir * it / 3 } + fadeOut(tween(180)))
-                    },
-                    label = "authContent",
-                ) { form ->
-                    Column(
-                        Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(14.dp),
-                    ) { if (form) FormContent(vm) else WelcomeContent(vm) }
-                }
+@Composable
+private fun WelcomeContent(vm: AuthViewModel) {
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(20.dp)) {
+        Text(stringResource(R.string.auth_headline), style = MaterialTheme.typography.displayMedium, color = Ink)
+        Text(stringResource(R.string.auth_body), style = MaterialTheme.typography.bodyLarge, color = InkSoft)
+        MoodPalette()
+        Spacer(Modifier.height(4.dp))
+        PrimaryButton(stringResource(R.string.auth_create), onClick = { vm.start(true) })
+        SecondaryButton(stringResource(R.string.auth_login), onClick = { vm.start(false) })
+    }
+}
+
+/** All ten moods, so the first screen shows what the app is actually for. */
+@Composable
+private fun MoodPalette() {
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Mood.entries.chunked(5).forEach { row ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                row.forEach { m -> MoodFace(m, Modifier.weight(1f).aspectRatio(1f), squircle = true) }
             }
         }
     }
 }
 
 @Composable
-private fun WelcomeContent(vm: AuthViewModel) {
-    Text(stringResource(R.string.app_name), color = Purple600, fontWeight = FontWeight.ExtraBold, style = MaterialTheme.typography.titleMedium)
-    Text(
-        stringResource(R.string.auth_headline),
-        style = MaterialTheme.typography.headlineMedium, textAlign = TextAlign.Center, color = Ink,
-    )
-    Spacer(Modifier.height(4.dp))
-    GradientButton(stringResource(R.string.auth_create), onClick = { vm.start(true) })
-    SwitchLine(stringResource(R.string.auth_have_account), stringResource(R.string.auth_login)) { vm.start(false) }
-}
-
-@Composable
 private fun FormContent(vm: AuthViewModel) {
-    Text(
-        stringResource(if (vm.signUpMode) R.string.auth_title_signup else R.string.auth_title_login),
-        style = MaterialTheme.typography.headlineMedium, color = Ink,
-    )
-    if (vm.signUpMode) MoodField(vm.name, vm::onName, stringResource(R.string.field_name))
-    MoodField(vm.email, vm::onEmail, stringResource(R.string.field_email), keyboardType = KeyboardType.Email)
-    MoodField(vm.password, vm::onPassword, stringResource(R.string.field_password), password = true)
-    val err = vm.error
-    AnimatedVisibility(visible = err != null, enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
-        Text(err?.let { stringResource(it) }.orEmpty(), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center)
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        Row(
+            Modifier.pressable { vm.back() }.defaultMinSize(minHeight = 48.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Icon(Icons.AutoMirrored.Rounded.ArrowBack, null, tint = InkSoft)
+            Text(stringResource(R.string.back), color = InkSoft, style = MaterialTheme.typography.bodyLarge)
+        }
+        Text(
+            stringResource(if (vm.signUpMode) R.string.auth_title_signup else R.string.auth_title_login),
+            style = MaterialTheme.typography.headlineMedium, color = Ink,
+        )
+        if (vm.signUpMode) MoodField(vm.name, vm::onName, stringResource(R.string.field_name))
+        MoodField(vm.email, vm::onEmail, stringResource(R.string.field_email), keyboardType = KeyboardType.Email)
+        MoodField(vm.password, vm::onPassword, stringResource(R.string.field_password), password = true)
+        val err = vm.error
+        AnimatedVisibility(visible = err != null, enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
+            Text(err?.let { stringResource(it) }.orEmpty(), color = Danger, style = MaterialTheme.typography.bodyMedium)
+        }
+        PrimaryButton(
+            stringResource(if (vm.signUpMode) R.string.auth_create else R.string.auth_login),
+            onClick = vm::submit, enabled = vm.canSubmit, loading = vm.loading,
+        )
+        if (vm.signUpMode) SwitchLine(stringResource(R.string.auth_have_account), stringResource(R.string.auth_login)) { vm.toggleMode() }
+        else SwitchLine(stringResource(R.string.auth_new_here), stringResource(R.string.auth_create)) { vm.toggleMode() }
     }
-    GradientButton(
-        stringResource(if (vm.signUpMode) R.string.auth_create else R.string.auth_login),
-        onClick = vm::submit, enabled = vm.canSubmit, loading = vm.loading,
-    )
-    if (vm.signUpMode) SwitchLine(stringResource(R.string.auth_have_account), stringResource(R.string.auth_login)) { vm.toggleMode() }
-    else SwitchLine(stringResource(R.string.auth_new_here), stringResource(R.string.auth_create)) { vm.toggleMode() }
-    Text(stringResource(R.string.back), color = InkSoft, modifier = Modifier.bounceClick { vm.back() }.padding(8.dp))
 }
 
 @Composable
 private fun SwitchLine(prefix: String, action: String, onClick: () -> Unit) {
-    Row(Modifier.bounceClick(onClick = onClick).padding(8.dp)) {
-        Text("$prefix ", color = InkSoft, style = MaterialTheme.typography.bodyMedium)
-        Text(action, color = Ink, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyMedium)
+    Row(
+        Modifier.pressable(onClick = onClick).defaultMinSize(minHeight = 48.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Text(prefix, color = InkSoft, style = MaterialTheme.typography.bodyMedium)
+        Text(action, color = Accent, fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.bodyMedium)
     }
 }
