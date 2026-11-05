@@ -1,5 +1,11 @@
 package dev.imhamid.moodlink.ui.theme
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +15,7 @@ import androidx.compose.material3.Shapes
 import androidx.compose.material3.Surface
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
@@ -41,6 +48,12 @@ val CtaGradient = Brush.horizontalGradient(listOf(Purple600, Blue500))
 
 @Composable
 fun MoodLinkTheme(content: @Composable () -> Unit) {
+    val drift = rememberInfiniteTransition(label = "ambient")
+    val d by drift.animateFloat(
+        0f, 1f,
+        infiniteRepeatable(tween(11_000, easing = FastOutSlowInEasing), RepeatMode.Reverse),
+        label = "drift",
+    )
     MaterialTheme(colorScheme = Scheme, typography = MoodTypography, shapes = MoodShapes) {
         Surface(color = Color.Transparent, contentColor = Ink) {
             Box(
@@ -52,14 +65,14 @@ fun MoodLinkTheme(content: @Composable () -> Unit) {
                         drawRect(
                             Brush.radialGradient(
                                 listOf(Color(0x66B58CFF), Color.Transparent),
-                                center = Offset(size.width * .1f, size.height * .05f),
+                                center = Offset(size.width * (.05f + .35f * d), size.height * (.05f + .08f * d)),
                                 radius = size.width * .95f,
                             )
                         )
                         drawRect(
                             Brush.radialGradient(
                                 listOf(Color(0x66FFB3D1), Color.Transparent),
-                                center = Offset(size.width * .95f, size.height * .92f),
+                                center = Offset(size.width * (.95f - .35f * d), size.height * (.92f - .1f * d)),
                                 radius = size.width * 1.05f,
                             )
                         )
