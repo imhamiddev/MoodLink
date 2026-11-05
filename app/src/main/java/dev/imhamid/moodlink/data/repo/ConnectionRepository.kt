@@ -1,5 +1,7 @@
 package dev.imhamid.moodlink.data.repo
 
+import dev.imhamid.moodlink.R
+import androidx.annotation.StringRes
 import dev.imhamid.moodlink.data.model.Connection
 import dev.imhamid.moodlink.data.model.ConnectionStatus
 import dev.imhamid.moodlink.data.model.UserProfile
@@ -14,7 +16,8 @@ import kotlinx.serialization.json.put
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class ConnectError(message: String) : Exception(message)
+/** A failure the person can act on. [messageRes] is shown in the chosen language. */
+class ConnectError(@StringRes val messageRes: Int) : Exception()
 
 @Serializable data class IdRow(val id: String)
 
@@ -26,18 +29,18 @@ class ConnectionRepository @Inject constructor(
     /** Sends a request to whoever owns [rawCode]. */
     suspend fun sendRequest(me: String, rawCode: String) {
         val code = InviteCode.normalize(rawCode)
-        if (code.length != InviteCode.LENGTH) throw ConnectError("That code doesn't look right")
+        if (code.length != InviteCode.LENGTH) throw ConnectError(R.string.connect_err_invalid)
 
         val target = client.postgrest.rpc("find_user_by_code", buildJsonObject { put("code", code) })
             .decodeList<IdRow>().firstOrNull()?.id
-            ?: throw ConnectError("No one has this code")
-        if (target == me) throw ConnectError("That's your own code 🙂")
+            ?: throw ConnectError(R.string.connect_err_unknown)
+        if (target == me) throw ConnectError(R.string.connect_err_self)
 
         val (a, b) = listOf(me, target).sorted()
         val id = "${a}_$b"
         val existing = client.from("connections").select { filter { eq("id", id) } }
             .decodeSingleOrNull<Connection>()
-        if (existing != null) throw ConnectError("You're already connected or waiting for a reply")
+        if (existing != null) throw ConnectError(R.string.connect_err_existing)
 
         client.from("connections").insert(
             Connection(
