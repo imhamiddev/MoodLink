@@ -7,4 +7,18 @@
     <string name="language">زبان</string>
     <string name="language_en">English</string>
     <string name="language_fa">فارسی</string>
+
+    <!-- Auth -->
+    <string name="auth_headline">حال تو، روی صفحه‌ی اصلی گوشی‌شان.</string>
+    <string name="auth_body">حالت را انتخاب کن. کسانی که به آن‌ها وصل شده‌ای آن را در ویجت می‌بینند. نیازی به پیام دادن نیست.</string>
+    <string name="auth_create">ساخت حساب</string>
+    <string name="auth_login">ورود</string>
+    <string name="auth_have_account">حساب داری؟</string>
+    <string name="auth_new_here">تازه آمده‌ای؟</string>
+    <string name="auth_title_signup">حساب خودت را بساز</string>
+    <string name="auth_title_login">خوش برگشتی</string>
+    <string name="field_name">نام تو</string>
+    <string name="field_email">ایمیل</string>
+    <string name="field_password">رمز عبور (حداقل ۶ نویسه)</string>
+    <string name="error_generic">مشکلی پیش آمد. دوباره تلاش کن.</string>
 </resources>

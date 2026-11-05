@@ -15,4 +15,18 @@
     <string name="language">Language</string>
     <string name="language_en">English</string>
     <string name="language_fa">فارسی</string>
+
+    <!-- Auth -->
+    <string name="auth_headline">Your mood, on their home screen.</string>
+    <string name="auth_body">Pick how you feel. The people you connect with see it in a widget. No texting needed.</string>
+    <string name="auth_create">Create an account</string>
+    <string name="auth_login">Log in</string>
+    <string name="auth_have_account">Already have an account?</string>
+    <string name="auth_new_here">New here?</string>
+    <string name="auth_title_signup">Create your account</string>
+    <string name="auth_title_login">Welcome back</string>
+    <string name="field_name">Your name</string>
+    <string name="field_email">Email</string>
+    <string name="field_password">Password (6+ characters)</string>
+    <string name="error_generic">Something went wrong. Try again.</string>
 </resources>
