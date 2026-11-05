@@ -14,10 +14,9 @@ class MoodRepository @Inject constructor(
     private val connections: ConnectionRepository,
     private val watcher: TableWatcher,
 ) {
-    suspend fun setMood(uid: String, mood: Mood, note: String) {
+    suspend fun setMood(uid: String, mood: Mood) {
         client.from("profiles").update({
             set("mood_id", mood.id)
-            set("note", note.trim())
             set("mood_updated_at", System.currentTimeMillis())
         }) { filter { eq("id", uid) } }
     }
