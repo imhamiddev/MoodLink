@@ -9,6 +9,8 @@ import androidx.compose.material3.Shapes
 import androidx.compose.material3.Surface
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -46,7 +48,9 @@ private val MoodShapes = Shapes(
 
 @Composable
 fun MoodLinkTheme(content: @Composable () -> Unit) {
-    MaterialTheme(colorScheme = Scheme, typography = MoodTypography, shapes = MoodShapes) {
+    val persian = LocalConfiguration.current.locales[0].language == "fa"
+    val typography = remember(persian) { moodTypography(persian) }
+    MaterialTheme(colorScheme = Scheme, typography = typography, shapes = MoodShapes) {
         Surface(color = Paper, contentColor = Ink) {
             Box(Modifier.fillMaxSize().background(Paper)) { content() }
         }
