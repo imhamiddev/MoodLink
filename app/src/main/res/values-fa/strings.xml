@@ -114,4 +114,11 @@
     <string name="time_minutes">%1$d دقیقه پیش</string>
     <string name="time_hours">%1$d ساعت پیش</string>
     <string name="time_days">%1$d روز پیش</string>
+
+    <!-- Mood slider and friends page -->
+    <string name="slider_low">خیلی بد</string>
+    <string name="slider_high">عالی</string>
+    <string name="shared_done">ارسال شد</string>
+    <string name="friends_button">دوستان</string>
+    <string name="friends_title">دوستان</string>
 </resources>

@@ -19,5 +19,15 @@ enum class Mood(val id: String, val emoji: String, @StringRes val labelRes: Int,
 
     companion object {
         fun fromId(id: String?): Mood? = entries.firstOrNull { it.id == id }
+
+        /** The moods ordered from worst to best, so a slider can walk through them. */
+        val Spectrum: List<Mood> = listOf(ANGRY, SAD, MISS_YOU, ANXIOUS, TIRED, SLEEPY, CALM, HAPPY, EXCITED, LOVE)
+
+        /** Slider position (0..1) of [mood] on the [Spectrum]. */
+        fun positionOf(mood: Mood): Float = Spectrum.indexOf(mood).toFloat() / (Spectrum.size - 1)
+
+        /** The mood nearest to a slider [position] (0..1). */
+        fun atPosition(position: Float): Mood =
+            Spectrum[(position.coerceIn(0f, 1f) * (Spectrum.size - 1)).let { Math.round(it) }]
     }
 }

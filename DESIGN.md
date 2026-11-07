@@ -50,3 +50,11 @@ em dashes, no hype words.
 ## What is deliberately absent
 
 No mascot, no speech bubble, no stat counters, no "feelings" arrows on tiles, no gradient button.
+
+## The mood screen (follows the owner's reference images)
+
+Home is one screen: "How do you feel today?", a furry ball, the mood's name in the display serif,
+a red to green slider and one button. The ball's colour and face follow the slider, and the top of
+the background takes on its colour. This is the one place a gradient is allowed, because the colour
+is the information. Friends, requests, the mood mix and the invite code live on their own page,
+reached by the Friends button; Profile sits behind the avatar.
