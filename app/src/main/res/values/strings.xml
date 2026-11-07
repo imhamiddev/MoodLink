@@ -112,4 +112,11 @@
     <string name="time_minutes">%1$d min ago</string>
     <string name="time_hours">%1$d h ago</string>
     <string name="time_days">%1$d d ago</string>
+
+    <!-- Mood slider and friends page -->
+    <string name="slider_low">Terrible</string>
+    <string name="slider_high">Excellent</string>
+    <string name="shared_done">Shared</string>
+    <string name="friends_button">Friends</string>
+    <string name="friends_title">Friends</string>
 </resources>
