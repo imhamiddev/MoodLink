@@ -77,9 +77,12 @@ fun MoodScreen(
             Modifier.fillMaxSize().systemBarsPadding().padding(horizontal = 24.dp, vertical = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                FriendsButton(requestCount, onFriends, Modifier.weight(1f, fill = false))
-                Box(Modifier.weight(1f))
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                // Profile on the leading edge, Friends on the trailing edge, in both directions.
                 Box(
                     Modifier.pressable(onClick = onProfile).size(48.dp).clip(CircleShape).background(Ink),
                     contentAlignment = Alignment.Center,
@@ -89,6 +92,7 @@ fun MoodScreen(
                         color = Paper, style = MaterialTheme.typography.titleMedium,
                     )
                 }
+                FriendsButton(requestCount, onFriends)
             }
 
             Text(
