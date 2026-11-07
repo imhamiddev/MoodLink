@@ -30,8 +30,8 @@ android {
         applicationId = "dev.imhamid.moodlink"
         minSdk = 26
         targetSdk = 35
-        versionCode = 5
-        versionName = "0.5.0"
+        versionCode = 6
+        versionName = "0.5.1"
 
         buildConfigField("String", "SUPABASE_URL", "\"${supabaseConfig("SUPABASE_URL", "https://placeholder.supabase.co")}\"")
         buildConfigField("String", "SUPABASE_ANON_KEY", "\"${supabaseConfig("SUPABASE_ANON_KEY", "placeholder-anon-key")}\"")
